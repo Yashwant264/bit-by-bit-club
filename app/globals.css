@@ -1,0 +1,578 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME VARIABLES — VOID (Dark) & ONYX (Light)
+   ============================================================ */
+:root {
+  /* Shared timing */
+  --transition-theme: 600ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ONYX Light Mode */
+  --bg-primary: #F0EDE8;
+  --bg-secondary: #E8E4DC;
+  --bg-tertiary: #DEDAD0;
+  --bg-card: rgba(240, 237, 232, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.45);
+
+  --text-primary: #0A0A0F;
+  --text-secondary: #2A2A35;
+  --text-muted: #6B6878;
+  --text-accent: #0A0A0F;
+
+  --accent-primary: #E8441A;
+  /* Burnt orange — punchy */
+  --accent-secondary: #1A1AE8;
+  /* Electric indigo */
+  --accent-tertiary: #0A8A5A;
+  /* Jade */
+  --accent-glow: rgba(232, 68, 26, 0.25);
+
+  --border-subtle: rgba(10, 10, 15, 0.08);
+  --border-strong: rgba(10, 10, 15, 0.18);
+  --border-accent: rgba(232, 68, 26, 0.4);
+
+  --shadow-card: 0 4px 24px rgba(10, 10, 15, 0.08), 0 1px 4px rgba(10, 10, 15, 0.05);
+  --shadow-hover: 0 20px 60px rgba(10, 10, 15, 0.15), 0 4px 16px rgba(10, 10, 15, 0.1);
+  --shadow-accent: 0 0 40px rgba(232, 68, 26, 0.2);
+
+  --mesh-color-1: rgba(232, 68, 26, 0.06);
+  --mesh-color-2: rgba(26, 26, 232, 0.04);
+  --mesh-color-3: rgba(10, 138, 90, 0.04);
+  --mesh-grid: rgba(10, 10, 15, 0.06);
+
+  --navbar-bg: rgba(240, 237, 232, 0.85);
+  --grain-opacity: 0.025;
+}
+
+.dark {
+  /* VOID Dark Mode */
+  --bg-primary: #030308;
+  --bg-secondary: #07070F;
+  --bg-tertiary: #0C0C18;
+  --bg-card: rgba(12, 12, 24, 0.8);
+  --bg-glass: rgba(255, 255, 255, 0.04);
+
+  --text-primary: #F0EDE8;
+  --text-secondary: #C8C4BC;
+  --text-muted: #6B6878;
+  --text-accent: #F0EDE8;
+
+  --accent-primary: #00FF8A;
+  /* Toxic green */
+  --accent-secondary: #B44FFF;
+  /* Deep purple */
+  --accent-tertiary: #FF2D9B;
+  /* Cyber pink */
+  --accent-glow: rgba(0, 255, 138, 0.2);
+
+  --border-subtle: rgba(240, 237, 232, 0.06);
+  --border-strong: rgba(240, 237, 232, 0.12);
+  --border-accent: rgba(0, 255, 138, 0.35);
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 255, 138, 0.1);
+  --shadow-accent: 0 0 60px rgba(0, 255, 138, 0.15), 0 0 120px rgba(180, 79, 255, 0.08);
+
+  --mesh-color-1: rgba(0, 255, 138, 0.04);
+  --mesh-color-2: rgba(180, 79, 255, 0.04);
+  --mesh-color-3: rgba(255, 45, 155, 0.03);
+  --mesh-grid: rgba(240, 237, 232, 0.04);
+
+  --navbar-bg: rgba(3, 3, 8, 0.85);
+  --grain-opacity: 0.045;
+}
+
+/* ============================================================
+   GLOBAL RESET & BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-space), 'Segoe UI', sans-serif;
+  transition:
+    background-color var(--transition-theme),
+    color var(--transition-theme);
+  overflow-x: hidden;
+  min-height: 100dvh;
+  cursor: none;
+}
+
+/* ============================================================
+   GRAINY TEXTURE OVERLAY
+   ============================================================ */
+.grain-overlay {
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+  z-index: 1000;
+  animation: grain-drift 8s steps(10) infinite;
+  transition: opacity var(--transition-theme);
+}
+
+@keyframes grain-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -10%);
+  }
+
+  20% {
+    transform: translate(-15%, 5%);
+  }
+
+  30% {
+    transform: translate(7%, -25%);
+  }
+
+  40% {
+    transform: translate(-5%, 25%);
+  }
+
+  50% {
+    transform: translate(-15%, 10%);
+  }
+
+  60% {
+    transform: translate(15%, 0%);
+  }
+
+  70% {
+    transform: translate(0%, 15%);
+  }
+
+  80% {
+    transform: translate(3%, 35%);
+  }
+
+  90% {
+    transform: translate(-10%, 10%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ============================================================
+   DIGITAL MESH BACKGROUND
+   ============================================================ */
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  transition: opacity var(--transition-theme);
+}
+
+.mesh-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--mesh-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mesh-grid) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, var(--mesh-color-1), transparent),
+    radial-gradient(ellipse 50% 60% at 80% 80%, var(--mesh-color-2), transparent),
+    radial-gradient(ellipse 40% 40% at 50% 50%, var(--mesh-color-3), transparent);
+  animation: mesh-pulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes mesh-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  transition: color var(--transition-theme);
+}
+
+p,
+span,
+li,
+label {
+  font-family: var(--font-space), sans-serif;
+  color: var(--text-secondary);
+  transition: color var(--transition-theme);
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* ============================================================
+   GLASSMORPHISM UTILITY
+   ============================================================ */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-subtle);
+  transition:
+    background var(--transition-theme),
+    border-color var(--transition-theme);
+}
+
+.glass-strong {
+  background: var(--bg-card);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid var(--border-strong);
+  transition:
+    background var(--transition-theme),
+    border-color var(--transition-theme);
+}
+
+/* ============================================================
+   HARDWARE-ACCELERATED UTILITIES
+   ============================================================ */
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-filter {
+  will-change: filter;
+}
+
+/* ============================================================
+   ACCENT UTILITIES
+   ============================================================ */
+.accent-text {
+  color: var(--accent-primary);
+  transition: color var(--transition-theme);
+}
+
+.accent-border {
+  border-color: var(--accent-primary) !important;
+  transition: border-color var(--transition-theme);
+}
+
+.accent-glow {
+  box-shadow: var(--shadow-accent);
+  transition: box-shadow var(--transition-theme);
+}
+
+/* ============================================================
+   BUTTON BASE
+   ============================================================ */
+.btn-magnetic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  cursor: none;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+  will-change: transform;
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  border: none;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-primary);
+  background: var(--accent-glow);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* ============================================================
+   BORDER BEAM ANIMATION
+   ============================================================ */
+@keyframes border-beam {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.border-beam-wrap {
+  position: relative;
+  border-radius: inherit;
+}
+
+.border-beam-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--accent-primary) 25%,
+      var(--accent-secondary) 50%,
+      var(--accent-tertiary) 75%,
+      transparent 100%);
+  background-size: 200% 100%;
+  animation: border-beam 3s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ============================================================
+   THEME TRANSITION OVERLAY
+   ============================================================ */
+.theme-transitioning * {
+  transition:
+    background-color var(--transition-theme),
+    border-color var(--transition-theme),
+    color var(--transition-theme),
+    box-shadow var(--transition-theme),
+    opacity var(--transition-theme) !important;
+}
+
+/* ============================================================
+   CURSOR HIDE ON MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+
+  .cursor-follower {
+    display: none;
+  }
+}
+
+/* ============================================================
+   SECTION SPACING
+   ============================================================ */
+.section-pad {
+  padding-top: clamp(80px, 12vh, 140px);
+  padding-bottom: clamp(80px, 12vh, 140px);
+}
+
+/* ============================================================
+   CARD HOVER EFFECTS
+   ============================================================ */
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ============================================================
+   SCROLLBAR HIDE UTILITY
+   ============================================================ */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================================
+   NEON TEXT
+   ============================================================ */
+.neon-text {
+  color: var(--accent-primary);
+  text-shadow: 0 0 20px var(--accent-primary), 0 0 40px var(--accent-glow);
+  transition: color var(--transition-theme), text-shadow var(--transition-theme);
+}
+
+/* ============================================================
+   BADGE
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-accent);
+  color: var(--accent-primary);
+  background: var(--accent-glow);
+}
+
+/* ============================================================
+   TEAM CARD PERSPECTIVE
+   ============================================================ */
+.perspective-wrap {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+/* ============================================================
+   PARALLAX HERO
+   ============================================================ */
+.hero-blur-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  will-change: transform;
+  animation: orb-float 8s ease-in-out infinite alternate;
+}
+
+@keyframes orb-float {
+  0% {
+    transform: translateY(0px) translateX(0px) scale(1);
+  }
+
+  100% {
+    transform: translateY(-30px) translateX(20px) scale(1.1);
+  }
+}
+
+/* ============================================================
+   STAT COUNTER
+   ============================================================ */
+.stat-number {
+  font-family: var(--font-syne), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--accent-primary);
+  line-height: 1;
+  transition: color var(--transition-theme);
+}
+
+/* ============================================================
+   DIVIDER LINE
+   ============================================================ */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
