@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 export default function CursorGlow() {
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
+
     useEffect(() => {
+
+        if (window.innerWidth < 768) return;
+
         const move = (e: MouseEvent) => {
             setPosition({
                 x: e.clientX,
@@ -22,7 +26,7 @@ export default function CursorGlow() {
 
     return (
         <div
-            className="pointer-events-none fixed z-50 h-64 w-64 rounded-full bg-emerald-500/20 blur-3xl"
+            className="pointer-events-none fixed z-50 h-64 w-64 rounded-full bg-emerald-500/20 blur-3xl hidden md:block"
             style={{
                 left: position.x - 128,
                 top: position.y - 128,

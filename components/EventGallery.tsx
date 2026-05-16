@@ -40,7 +40,7 @@ export default function EventGallery() {
                             whileHover={{
                                 scale: 1.03,
                             }}
-                            className="group relative rounded-2xl glass-strong overflow-hidden transform-gpu"
+                            className="group relative rounded-2xl bg-zinc-900/80 border border-white/5 md:bg-transparent md:border-none md:glass-strong overflow-hidden transform-gpu"
                         >
                             <div
                                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"

@@ -60,7 +60,7 @@ export function CursorFollower() {
     <>
       {/* Liquid trail */}
       <motion.div
-        className="cursor-follower fixed pointer-events-none z-[9998] mix-blend-screen"
+        className="cursor-follower fixed pointer-events-none z-[9998] mix-blend-screen hidden md:block"
         style={{
           x: trailX,
           y: trailY,
@@ -86,7 +86,7 @@ export function CursorFollower() {
 
       {/* Main cursor dot */}
       <motion.div
-        className="cursor-follower fixed pointer-events-none z-[9999]"
+        className="cursor-follower fixed pointer-events-none z-[9999] hidden md:block"
         style={{
           x: cursorX,
           y: cursorY,

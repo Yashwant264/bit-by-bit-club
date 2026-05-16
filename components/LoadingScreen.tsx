@@ -37,12 +37,12 @@ export default function LoadingScreen() {
               alt="Bit By Bit Logo"
               width={140}
               height={140}
-              className="relative z-10 object-contain drop-shadow-[0_0_30px_rgba(0,255,150,0.8)] animate-pulse"
+              className="relative z-10 object-contain drop-shadow-[0_0_30px_rgba(0,255,150,0.8)] animate-pulse mix-blend-lighten"
             />
           </div>
 
           {/* Club Name */}
-          <h1 className="mt-8 text-5xl md:text-7xl font-black tracking-[0.3em] text-white">
+          <h1 className="mt-8 text-3xl sm:text-5xl md:text-7xl font-black tracking-[0.15em] sm:tracking-[0.3em] text-white whitespace-nowrap">
             <span className="text-emerald-400">BIT</span> BY <span className="text-emerald-400">BIT</span>
           </h1>
 
