@@ -1,26 +1,9 @@
 # Bit by Bit — VIT Bhopal Technical Club
-## Beast-Level Next.js 14 Platform
 
 ---
 
-## 🚀 Setup (One Command)
 
-```bash
-# 1. Enter the project
-cd bit-by-bit
-
-# 2. Install ALL dependencies
-npm install framer-motion lucide-react clsx tailwind-merge next-themes
-
-# 3. Start dev server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
----
-
-## 📁 File Structure
+## File Structure
 
 ```
 bit-by-bit/
@@ -45,7 +28,7 @@ bit-by-bit/
 
 ---
 
-## 🎨 Dual Theme System
+## Dual Theme System
 
 | Feature | VOID (Dark) | ONYX (Light) |
 |---|---|---|
@@ -57,7 +40,7 @@ bit-by-bit/
 
 ---
 
-## ⚡ Performance Architecture
+## Performance Architecture
 
 - **Hardware acceleration**: Every animation uses `transform-gpu`, `will-change`, and `backface-visibility: hidden`
 - **Spring physics**: Framer Motion springs for magnetic buttons, 3D tilt, liquid cursor
@@ -67,7 +50,7 @@ bit-by-bit/
 
 ---
 
-## 🔧 Key Features
+## Key Features
 
 - **Dynamic Island Navbar**: Morphs width on scroll, active route indicator with `layoutId`
 - **Mobile Bottom Dock**: Haptic-style icon dock, replaces navbar on mobile
@@ -81,4 +64,4 @@ bit-by-bit/
 
 ---
 
-Built with 🔥 by Bit by Bit × Claude
+Built by Technical Team (Bit by Bit Club)
