@@ -4,12 +4,14 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const images = [
-    "/events/event1.jpg",
-    "/events/event2.jpg",
-    "/events/event3.jpg",
-    "/events/event4.jpg",
-    "/events/event5.jpg",
-    "/events/event6.jpg",
+    "/events/event-1.jpg",
+    "/events/event-2.jpg",
+    "/events/event-3.jpg",
+    "/events/event-4.jpg",
+    "/events/event-5.jpg",
+    "/events/event-6.jpg",
+    "/events/event-7.jpg",
+    "/events/event-8.jpg",
 ];
 
 export default function EventGallery() {
