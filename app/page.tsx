@@ -14,6 +14,7 @@ import Image from 'next/image';
 import EventGallery from '@/components/EventGallery';
 import Testimonials from '@/components/Testimonials';
 
+
 /* ── Magnetic Button ─────────────────────────────────────── */
 function MagneticButton({
   children,
@@ -131,51 +132,64 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Dynamic global layout selectors mapped to clean frosted-glass surfaces */}
+      {/* 🚀 ULTIMATE FIX: This global style injector overrides the layout canvas theme completely when light mode is active */}
       <style jsx global>{`
-        html:not(.dark) .home-light-override,
-        html:not(.dark) .home-light-override section {
+        html:not(.dark) .home-page-layout-wrapper,
+        html:not(.dark) .home-page-layout-wrapper section,
+        html:not(.dark) .home-page-layout-wrapper div:not([class*="badge"]):not([class*="btn"]):not([class*="glow"]) {
           background-color: transparent !important;
+          background-image: none !important;
         }
 
-        html:not(.dark) .home-light-override .glass-strong,
-        html:not(.dark) .home-light-override [class*="bg-zinc-"],
-        html:not(.dark) .home-light-override [class*="bg-neutral-"],
-        html:not(.dark) .home-light-override [class*="bg-black/"],
-        html:not(.dark) .home-light-override [class*="bg-white/"] {
-          background: rgba(255, 255, 255, 0.45) !important;
+        /* Changes main background canvas view to pure light layout canvas */
+        html:not(.dark) body,
+        html:not(.dark) main {
+          background-color: #ffffff !important;
+        }
+
+        /* Cards, bento boxes, testimonials, and gallery items turn into frosted glass elements */
+        html:not(.dark) .home-page-layout-wrapper .glass-strong,
+        html:not(.dark) .home-page-layout-wrapper div[class*="bg-zinc-"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="bg-neutral-"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="bg-black/"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="bg-white/10"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="bg-white/5"] {
+          background-color: rgba(255, 255, 255, 0.45) !important;
           backdrop-filter: blur(16px) saturate(120%) !important;
           -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
-          border-color: rgba(0, 0, 0, 0.06) !important;
+          border: 1px solid rgba(0, 0, 0, 0.08) !important;
           box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02) !important;
         }
 
-        html:not(.dark) .home-light-override [class*="border-"] {
-          border-color: rgba(0, 0, 0, 0.06) !important;
-        }
-
-        html:not(.dark) .home-light-override h1,
-        html:not(.dark) .home-light-override h2,
-        html:not(.dark) .home-light-override h3,
-        html:not(.dark) .home-light-override h4,
-        html:not(.dark) .home-light-override [class*="text-zinc-100"],
-        html:not(.dark) .home-light-override [class*="text-neutral-100"],
-        html:not(.dark) .home-light-override [class*="text-white"] {
+        /* Sharp dark text mapping */
+        html:not(.dark) .home-page-layout-wrapper h1,
+        html:not(.dark) .home-page-layout-wrapper h2,
+        html:not(.dark) .home-page-layout-wrapper h3,
+        html:not(.dark) .home-page-layout-wrapper h4,
+        html:not(.dark) .home-page-layout-wrapper div[class*="text-zinc-100"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="text-neutral-100"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="text-white"],
+        html:not(.dark) .home-page-layout-wrapper span:not(.neon-text) {
           color: #0f172a !important;
         }
 
-        html:not(.dark) .home-light-override p,
-        html:not(.dark) .home-light-override span:not(.neon-text),
-        html:not(.dark) .home-light-override [class*="text-zinc-400"],
-        html:not(.dark) .home-light-override [class*="text-neutral-400"] {
+        /* Secondary muted text mapping */
+        html:not(.dark) .home-page-layout-wrapper p,
+        html:not(.dark) .home-page-layout-wrapper div[class*="text-zinc-400"],
+        html:not(.dark) .home-page-layout-wrapper div[class*="text-neutral-400"] {
           color: #475569 !important;
+        }
+
+        /* Clean subtle borders */
+        html:not(.dark) .home-page-layout-wrapper [class*="border-"] {
+          border-color: rgba(0, 0, 0, 0.08) !important;
         }
       `}</style>
 
       <AmbientBackground />
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full overflow-hidden home-light-override">
+      <div className="relative z-10 w-full overflow-hidden home-page-layout-wrapper">
 
         {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
