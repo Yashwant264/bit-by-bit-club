@@ -14,7 +14,6 @@ import Image from 'next/image';
 import EventGallery from '@/components/EventGallery';
 import Testimonials from '@/components/Testimonials';
 
-
 /* ── Magnetic Button ─────────────────────────────────────── */
 function MagneticButton({
   children,
@@ -132,69 +131,58 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 🚀 ULTIMATE FIX: This global style injector overrides the layout canvas theme completely when light mode is active */}
+      {/* 🛠️ COMPONENT LEVEL OVERRIDE: Pierces sub-component scopes dynamically independent of the theme engine implementation */}
       <style jsx global>{`
-        html:not(.dark) .home-page-layout-wrapper,
-        html:not(.dark) .home-page-layout-wrapper section,
-        html:not(.dark) .home-page-layout-wrapper div:not([class*="badge"]):not([class*="btn"]):not([class*="glow"]) {
-          background-color: transparent !important;
-          background-image: none !important;
-        }
-
-        /* Changes main background canvas view to pure light layout canvas */
-        html:not(.dark) body,
-        html:not(.dark) main {
-          background-color: #ffffff !important;
-        }
-
-        /* Cards, bento boxes, testimonials, and gallery items turn into frosted glass elements */
-        html:not(.dark) .home-page-layout-wrapper .glass-strong,
-        html:not(.dark) .home-page-layout-wrapper div[class*="bg-zinc-"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="bg-neutral-"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="bg-black/"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="bg-white/10"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="bg-white/5"] {
-          background-color: rgba(255, 255, 255, 0.45) !important;
+        /* Forces structural grid surfaces to act as transparent glass layers */
+        .home-view-container .glass-strong,
+        .home-view-container div[class*="bg-zinc-"],
+        .home-view-container div[class*="bg-neutral-"],
+        .home-view-container div[class*="bg-black/"],
+        .home-view-container div[class*="bg-white/10"],
+        .home-view-container div[class*="bg-white/5"] {
+          background: var(--bg-surface, rgba(255, 255, 255, 0.45)) !important;
           backdrop-filter: blur(16px) saturate(120%) !important;
           -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
-          border: 1px solid rgba(0, 0, 0, 0.08) !important;
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02) !important;
+          border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08)) !important;
         }
 
-        /* Sharp dark text mapping */
-        html:not(.dark) .home-page-layout-wrapper h1,
-        html:not(.dark) .home-page-layout-wrapper h2,
-        html:not(.dark) .home-page-layout-wrapper h3,
-        html:not(.dark) .home-page-layout-wrapper h4,
-        html:not(.dark) .home-page-layout-wrapper div[class*="text-zinc-100"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="text-neutral-100"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="text-white"],
-        html:not(.dark) .home-page-layout-wrapper span:not(.neon-text) {
-          color: #0f172a !important;
+        /* Forces clean token alignment for nested typographical frameworks */
+        .home-view-container h1,
+        .home-view-container h2,
+        .home-view-container h3,
+        .home-view-container h4,
+        .home-view-container div[class*="text-zinc-100"],
+        .home-view-container div[class*="text-neutral-100"],
+        .home-view-container div[class*="text-white"],
+        .home-view-container span:not(.neon-text) {
+          color: var(--text-primary) !important;
         }
 
-        /* Secondary muted text mapping */
-        html:not(.dark) .home-page-layout-wrapper p,
-        html:not(.dark) .home-page-layout-wrapper div[class*="text-zinc-400"],
-        html:not(.dark) .home-page-layout-wrapper div[class*="text-neutral-400"] {
-          color: #475569 !important;
+        .home-view-container p,
+        .home-view-container div[class*="text-zinc-400"],
+        .home-view-container div[class*="text-neutral-400"] {
+          color: var(--text-muted) !important;
         }
 
-        /* Clean subtle borders */
-        html:not(.dark) .home-page-layout-wrapper [class*="border-"] {
-          border-color: rgba(0, 0, 0, 0.08) !important;
+        .home-view-container [class*="border-"] {
+          border-color: var(--border-subtle) !important;
         }
       `}</style>
 
       <AmbientBackground />
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full overflow-hidden home-page-layout-wrapper">
+      {/* Uses layout style bindings mapped directly to global CSS custom design properties */}
+      <div
+        className="relative z-10 w-full overflow-hidden home-view-container"
+        style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+      >
 
         {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
           ref={heroRef}
           className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
+          style={{ backgroundColor: 'transparent' }}
         >
           <div
             className="hero-blur-orb w-[600px] h-[600px] absolute pointer-events-none"
@@ -328,6 +316,7 @@ export default function HomePage() {
           style={{
             borderTop: '1px solid var(--border-subtle)',
             borderBottom: '1px solid var(--border-subtle)',
+            backgroundColor: 'transparent'
           }}
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -365,7 +354,7 @@ export default function HomePage() {
         </motion.section>
 
         {/* ── BENTO SECTION ─────────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -396,7 +385,7 @@ export default function HomePage() {
         </section>
 
         {/* ── PILLARS SECTION ───────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -452,7 +441,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="rounded-2xl p-8 glass-strong hover:scale-[1.01] transition-all group shadow-sm"
+                  className="rounded-2xl p-8 glass-strong hover:scale-[1.01] transition-all group"
                   style={{ border: '1px solid var(--border-subtle)' }}
                 >
                   <div
@@ -484,14 +473,14 @@ export default function HomePage() {
         </section>
 
         {/* ── JOIN CTA ──────────────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="rounded-3xl p-12 glass-strong relative overflow-hidden shadow-sm"
+              className="rounded-3xl p-12 glass-strong relative overflow-hidden"
               style={{ border: '1px solid var(--border-subtle)' }}
             >
               <div
@@ -525,7 +514,7 @@ export default function HomePage() {
               <div className="flex gap-4 justify-center flex-wrap">
                 <MagneticButton href="/team">
                   <button
-                    className="px-5 py-2.5 rounded-xl font-semibold text-white text-sm shadow-md"
+                    className="px-5 py-2.5 rounded-xl font-semibold text-white text-sm"
                     style={{ background: 'var(--accent-primary)' }}
                   >
                     Meet the Team
@@ -551,7 +540,10 @@ export default function HomePage() {
         <Testimonials />
 
         {/* ── FOOTER ────────────────────────────────── */}
-        <footer className="relative z-10 border-t px-6 py-10" style={{ borderColor: 'var(--border-subtle)' }}>
+        <footer
+          className="relative z-10 border-t px-6 py-10"
+          style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'transparent' }}
+        >
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
             <div className="flex items-center gap-3">
