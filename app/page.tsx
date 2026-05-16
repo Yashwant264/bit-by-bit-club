@@ -266,72 +266,47 @@ export default function HomePage() {
         </section>
 
         {/* ── STATS SECTION ─────────────────────────── */}
-        <section className="px-6 mb-16 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { value: 200, suffix: '+', label: 'Active Members', color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
-                { value: 48, suffix: '', label: 'Projects Shipped', color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
-                { value: 12, suffix: 'k+', label: 'GitHub Stars', color: 'var(--accent-tertiary)', glow: 'rgba(255,45,155,0.12)' },
-                { value: 3, suffix: 'x', label: 'Hackathon Wins', color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
-              ].map((stat, i) => (
+        <motion.section
+          className="py-20"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className="max-w-5xl mx-auto">
+            <div className="divider mb-16" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-8"
+            >
+              {STATS.map((stat, i) => (
                 <motion.div
                   key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.05, duration: 0.5 }}
-                  className="rounded-2xl p-6 text-center transition-all group relative overflow-hidden transform-gpu flex flex-col justify-center min-h-[140px] dark:bg-zinc-900/90 bg-white/95"
-                  style={{
-                    border: '1px solid var(--border-subtle)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)'
-                  }}
-                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-center"
                 >
-                  {/* Outer tracking border glow highlight on Hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                    style={{ boxShadow: `inset 0 0 0 1px ${stat.color}40` }}
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    className="stat-number"
                   />
-
-                  {/* Active animated linear border beam */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${stat.color}, transparent)`,
-                      backgroundSize: '200% 100%',
-                    }}
-                  />
-
-                  {/* Soft background ambient glow backdrop */}
-                  <div
-                    className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-10 transition-all duration-700 blur-2xl pointer-events-none"
-                    style={{ background: stat.color }}
-                  />
-
-                  {/* High Contrast Counters */}
-                  <div className="relative z-10" style={{ color: 'var(--text-primary)' }}>
-                    <AnimatedCounter
-                      value={stat.value}
-                      suffix={stat.suffix}
-                      className="text-3xl md:text-4xl font-mono font-bold tracking-tight"
-                    />
-                  </div>
-
-                  {/* High Contrast Labels */}
                   <p
-                    className="text-[10px] md:text-xs uppercase tracking-widest mt-2 font-mono font-semibold relative z-10"
+                    className="text-sm mt-2 font-medium"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     {stat.label}
                   </p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
+            <div className="divider mt-16" />
           </div>
-        </section>
+        </motion.section>
 
         {/* ── BENTO GRID SECTION ────────────────────── */}
         <section className="relative z-10 px-6 py-20">
@@ -348,7 +323,9 @@ export default function HomePage() {
                 Not just a club. <span className="neon-text">A movement.</span>
               </h2>
             </motion.div>
-            <BentoGrid />
+            <div className="[&_>_div_>_div]:bg-white/95 [&_>_div_>_div]:dark:bg-zinc-900/90 [&_>_div_>_div]:backdrop-blur-[20px] [&_>_div_>_div]:-webkit-backdrop-blur-[20px] [&_>_div_>_div]:!opacity-100">
+              <BentoGrid />
+            </div>
           </div>
         </section>
 
