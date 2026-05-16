@@ -127,7 +127,6 @@ export default function HomePage() {
     return <LoadingScreen />;
   }
 
-  // Accent mapping variables taken directly from your events page config
   const pillarAccents = [
     { color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
     { color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
@@ -137,9 +136,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
 
-      {/* ── DESIGN TOKENS ENGINE & BORDER-BEAM DEFINITION ── */}
+      {/* ── DESIGN TOKENS ENGINE FIXED FOR SYSTEM VISUAL SYMMETRY ── */}
       <style jsx global>{`
-        /* Architectural grid lines layout matching events overlay background */
+        /* Architectural grid lines overlay mapping matching Events exactly */
         .unified-homepage-context {
           background-size: 40px 40px;
           background-image: 
@@ -148,7 +147,6 @@ export default function HomePage() {
           background-color: var(--bg-primary);
         }
 
-        /* The exact structural keyframe definition needed for standard border beams */
         @keyframes border-beam {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -160,16 +158,25 @@ export default function HomePage() {
           animation: border-beam 2s linear infinite;
         }
 
-        /* Perfectly isolated card styling surface supporting both Light and Dark mode variations */
+        /* Dynamically respects dark/light tokens directly from Events configuration variables */
         .unified-homepage-context .glass-strong {
-          background: var(--bg-surface, rgba(255, 255, 255, 0.45)) !important;
-          backdrop-filter: blur(16px) saturate(120%) !important;
-          -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+          background: var(--bg-surface) !important;
+          backdrop-filter: blur(20px) saturate(140%) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
           border: 1px solid var(--border-subtle) !important;
           transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Consistent structural styling wrapper for context badges */
+        /* Standardizes structural layout tracking across deep nested child subcomponents */
+        .unified-homepage-context .glass-card-surface,
+        .unified-homepage-context div[class*="bg-zinc-900/40"],
+        .unified-homepage-context div[class*="bg-white/40"] {
+          background: var(--bg-surface) !important;
+          border-color: var(--border-subtle) !important;
+          backdrop-filter: blur(20px) !important;
+          -webkit-backdrop-filter: blur(20px) !important;
+        }
+
         .unified-homepage-context .badge {
           background: transparent !important;
           border: 1px solid var(--border-subtle) !important;
@@ -273,14 +280,8 @@ export default function HomePage() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className="max-w-5xl mx-auto">
-            <div className="divider mb-16" />
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-8"
-            >
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {STATS.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -288,23 +289,33 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-center"
+                  className="glass-strong rounded-2xl p-6 transform-gpu border flex flex-col justify-center text-center min-h-[140px] relative group overflow-hidden"
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 >
-                  <AnimatedCounter
-                    value={stat.value}
-                    suffix={stat.suffix}
-                    className="stat-number"
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                    style={{ boxShadow: `inset 0 0 0 1px var(--accent-primary)40` }}
                   />
-                  <p
-                    className="text-sm mt-2 font-medium"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {stat.label}
-                  </p>
+                  <div
+                    className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
+                    style={{ background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)` }}
+                  />
+                  <div className="relative z-10">
+                    <AnimatedCounter
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      className="stat-number text-3xl md:text-4xl font-bold font-mono tracking-tight"
+                    />
+                    <p
+                      className="text-xs uppercase tracking-widest mt-2 font-mono font-semibold"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
+                      {stat.label}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
-            </motion.div>
-            <div className="divider mt-16" />
+            </div>
           </div>
         </motion.section>
 
@@ -323,7 +334,9 @@ export default function HomePage() {
                 Not just a club. <span className="neon-text">A movement.</span>
               </h2>
             </motion.div>
-            <div className="[&_>_div_>_div]:bg-white/95 [&_>_div_>_div]:dark:bg-zinc-900/90 [&_>_div_>_div]:backdrop-blur-[20px] [&_>_div_>_div]:-webkit-backdrop-blur-[20px] [&_>_div_>_div]:!opacity-100">
+
+            {/* ── FIXED OPAQUE GLASS ENVELOPE FOR BENTO CARDS ── */}
+            <div className="[&_div[class*='glass']]:bg-white/95 [&_div[class*='glass']]:dark:bg-zinc-950/90 [&_div[class*='glass']]:backdrop-blur-[20px] [&_div[class*='glass']]:-webkit-backdrop-blur-[20px] [&_div[class*='glass']]:border-zinc-200/80 [&_div[class*='glass']]:dark:border-zinc-800/80 [&_div]:!opacity-100">
               <BentoGrid />
             </div>
           </div>
@@ -374,21 +387,16 @@ export default function HomePage() {
                   className="rounded-2xl p-6 md:p-8 glass-strong transition-all group relative overflow-hidden transform-gpu"
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 >
-                  {/* Outer / Inner tracking border glow highlight on Hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
                     style={{ boxShadow: `inset 0 0 0 1px ${pillar.accent.color}40` }}
                   />
 
-                  {/* Active linear animated border-beam layout injected precisely via your events specification */}
                   <div
                     className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${pillar.accent.color}, transparent)`,
-                    }}
+                    style={{ background: `linear-gradient(90deg, transparent, ${pillar.accent.color}, transparent)` }}
                   />
 
-                  {/* Infinite radial glow backdrop orb mapping */}
                   <div
                     className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 blur-3xl pointer-events-none"
                     style={{ background: pillar.accent.color }}
@@ -448,7 +456,6 @@ export default function HomePage() {
               </h2>
             </motion.div>
 
-            {/* Renders your custom testimonials file with proper alignment */}
             <Testimonials />
           </div>
         </section>
@@ -463,16 +470,13 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="rounded-2xl p-8 md:p-12 glass-strong relative overflow-hidden shadow-sm"
             >
-              {/* Context active beam for the CTA Box layout block */}
               <div
                 className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
                 style={{ boxShadow: `inset 0 0 0 1px var(--accent-primary)40` }}
               />
               <div
                 className="absolute top-0 left-0 right-0 h-px opacity-0 hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
-                style={{
-                  background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)`,
-                }}
+                style={{ background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)` }}
               />
 
               <div className="badge mb-6 inline-flex items-center mx-auto gap-1.5">
