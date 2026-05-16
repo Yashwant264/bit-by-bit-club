@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
-import { useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { BentoGrid } from '@/components/BentoGrid';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { ArrowRight, Cpu, Zap, Globe, Star, ChevronRight } from 'lucide-react';
+import { Cpu, Zap, Globe, Star, ChevronRight, Trophy, Terminal, Brain, Code2, Layers, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import AmbientBackground from '@/components/AmbientBackground';
 import ParticlesBackground from '@/components/ParticlesBackground';
@@ -85,7 +84,7 @@ function FloatingParticle({ delay, x, y }: { delay: number; x: number; y: number
   );
 }
 
-/* ── Stats ───────────────────────────────────────────────── */
+/* ── Stats Data ──────────────────────────────────────────── */
 const STATS = [
   { value: 200, suffix: '+', label: 'Active Members' },
   { value: 48, suffix: '', label: 'Projects Shipped' },
@@ -100,8 +99,7 @@ export default function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 4000);
-
+    }, 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -130,63 +128,66 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen relative selection:bg-emerald-500/30" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
 
-      {/* ── UNIFIED HOVER EFFECTS & CARD OVERRIDES (Matches Events Architecture Perfectly) ── */}
+      {/* ── STYLING ENGINE FOR SYSTEM-WIDE SYNCHRONIZATION ── */}
       <style jsx global>{`
-        /* Deep targets all box elements across Home, BentoGrid, EventGallery, and Testimonials */
-        .exact-events-theme-wrapper .glass-strong,
-        .exact-events-theme-wrapper div[class*="bg-zinc-"],
-        .exact-events-theme-wrapper div[class*="bg-neutral-"],
-        .exact-events-theme-wrapper div[class*="bg-black/"],
-        .exact-events-theme-wrapper div[class*="bg-white/10"],
-        .exact-events-theme-wrapper div[class*="bg-white/5"],
-        .exact-events-theme-wrapper [class*="rounded-2xl"] {
-          background: var(--bg-surface, rgba(255, 255, 255, 0.45)) !important;
+        /* Global Grid Layout Alignment matching your Events background pattern */
+        .unified-theme-grid-body {
+          background-size: 40px 40px;
+          background-image: 
+            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Eradicates the solid grey container styles seen in screenshots and replaces with pure glass-strong tokens */
+        .unified-theme-grid-body .glass-strong,
+        .unified-theme-grid-body div[class*="bg-zinc-"],
+        .unified-theme-grid-body div[class*="bg-neutral-"],
+        .unified-theme-grid-body div[class*="bg-black/"],
+        .unified-theme-grid-body div[class*="bg-white/10"],
+        .unified-theme-grid-body div[class*="bg-white/5"],
+        .unified-theme-grid-body [class*="rounded-2xl"] {
+          background: rgba(13, 13, 15, 0.65) !important;
           backdrop-filter: blur(16px) saturate(120%) !important;
           -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
           border: 1px solid var(--border-subtle) !important;
+        }
+
+        /* Fixes color contrast issue: forces high readability across typography layers */
+        .unified-theme-grid-body h1,
+        .unified-theme-grid-body h2,
+        .unified-theme-grid-body h3,
+        .unified-theme-grid-body h4,
+        .unified-theme-grid-body div[class*="text-zinc-100"],
+        .unified-theme-grid-body div[class*="text-neutral-100"],
+        .unified-theme-grid-body div[class*="text-white"],
+        .unified-theme-grid-body span:not(.neon-text):not([class*="badge"]) {
           color: var(--text-primary) !important;
         }
 
-        /* Forces absolute typographic alignment with your design tokens */
-        .exact-events-theme-wrapper h1,
-        .exact-events-theme-wrapper h2,
-        .exact-events-theme-wrapper h3,
-        .exact-events-theme-wrapper h4,
-        .exact-events-theme-wrapper div[class*="text-zinc-100"],
-        .exact-events-theme-wrapper div[class*="text-neutral-100"],
-        .exact-events-theme-wrapper div[class*="text-white"],
-        .exact-events-theme-wrapper span:not(.neon-text):not([class*="badge"]) {
-          color: var(--text-primary) !important;
-        }
-
-        .exact-events-theme-wrapper p,
-        .exact-events-theme-wrapper div[class*="text-zinc-400"],
-        .exact-events-theme-wrapper div[class*="text-neutral-400"],
-        .exact-events-theme-wrapper span[class*="text-muted"] {
+        .unified-theme-grid-body p,
+        .unified-theme-grid-body div[class*="text-zinc-400"],
+        .unified-theme-grid-body div[class*="text-neutral-400"],
+        .unified-theme-grid-body span[class*="text-muted"] {
           color: var(--text-muted) !important;
         }
 
-        /* Border token enforcing */
-        .exact-events-theme-wrapper [class*="border-"],
-        .exact-events-theme-wrapper border {
-          border-color: var(--border-subtle) !important;
-        }
-
-        /* Badge design match */
-        .exact-events-theme-wrapper .badge {
+        /* Enforce absolute styling matching for dynamic UI badges */
+        .unified-theme-grid-body .badge {
           background-color: transparent !important;
           border: 1px solid var(--border-subtle) !important;
           color: var(--text-primary) !important;
           font-family: var(--font-mono), monospace;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
         }
       `}</style>
 
       <AmbientBackground />
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full overflow-hidden exact-events-theme-wrapper">
+      <div className="relative z-10 w-full overflow-hidden unified-theme-grid-body">
 
         {/* ── HERO SECTION ──────────────────────────── */}
         <section
@@ -216,7 +217,7 @@ export default function HomePage() {
             }}
             className="relative z-10 text-center max-w-6xl mx-auto transform-gpu"
           >
-            {/* Badge matching Events spec */}
+            {/* Upper Badge Component */}
             <div className="badge mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs">
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
@@ -225,20 +226,20 @@ export default function HomePage() {
               VIT Bhopal · Est. 2020
             </div>
 
-            {/* Headline Title */}
+            {/* Neon Glowing Typography Header */}
             <h1 className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] mb-5 tracking-tight">
               We Build
               <br />
               <span className="neon-text">Bit by Bit.</span>
             </h1>
 
-            {/* Subtext description */}
+            {/* Description Subtext */}
             <p className="text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
               The elite technical incubator at VIT Bhopal. Where production-grade
               engineers, AI sovereigns, and open-source architects are forged.
             </p>
 
-            {/* CTA Button Grid Layout */}
+            {/* Interactive Functional Actions */}
             <div className="flex flex-wrap gap-4 justify-center">
               <MagneticButton href="/events">
                 <button
@@ -281,6 +282,7 @@ export default function HomePage() {
             >
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col justify-center">
+                  {/* Fixed theme styling token mapping below */}
                   <div style={{ color: 'var(--text-primary)' }}>
                     <AnimatedCounter
                       value={stat.value}
@@ -289,7 +291,7 @@ export default function HomePage() {
                     />
                   </div>
                   <p
-                    className="text-xs uppercase tracking-widest mt-2 font-mono"
+                    className="text-xs uppercase tracking-widest mt-2 font-mono font-semibold"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     {stat.label}
@@ -300,8 +302,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── BENTO SECTION ─────────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        {/* ── BENTO GRID SECTION ────────────────────── */}
+        <section className="relative z-10 px-6 py-20">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -319,8 +321,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── PILLARS SECTION ───────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        {/* ── CORE PILLARS CARD ARCHITECTURE ────────── */}
+        <section className="relative z-10 px-6 py-20">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -364,9 +366,20 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="rounded-2xl p-6 md:p-8 glass-strong transition-all group relative overflow-hidden"
+                  className="rounded-2xl p-6 md:p-8 glass-strong transition-all group relative overflow-hidden transform-gpu"
                   style={{ border: '1px solid var(--border-subtle)' }}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 >
+                  {/* Hover glow borders implemented explicitly to match your EventCard design pattern */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                    style={{ boxShadow: `inset 0 0 0 1px ${pillar.color}40` }}
+                  />
+                  <div
+                    className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 blur-3xl pointer-events-none"
+                    style={{ background: pillar.color }}
+                  />
+
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all"
                     style={{
@@ -396,8 +409,17 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── JOIN CTA ──────────────────────────────── */}
-        <section className="relative z-10 px-6 py-24">
+        {/* ── DYNAMIC INJECTS: EVENT GALLERY & TESTIMONIALS ── */}
+        <section className="relative z-10 py-4">
+          <EventGallery />
+        </section>
+
+        <section className="relative z-10 py-4">
+          <Testimonials />
+        </section>
+
+        {/* ── CALL TO ACTION SECTION ────────────────── */}
+        <section className="relative z-10 px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
@@ -450,11 +472,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── THEME LOCKED ADDITIONAL COMPONENTS ── */}
-        <EventGallery />
-        <Testimonials />
-
-        {/* ── FOOTER ────────────────────────────────── */}
+        {/* ── FOOTER SYSTEM ─────────────────────────── */}
         <footer className="relative z-10 border-t px-6 py-10" style={{ borderColor: 'var(--border-subtle)' }}>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
