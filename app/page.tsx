@@ -5,7 +5,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { BentoGrid } from '@/components/BentoGrid';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Cpu, Zap, Globe, Star, ChevronRight, Trophy, Terminal, Brain, Code2, Layers, Rocket } from 'lucide-react';
+import { Cpu, Zap, Globe, Star, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import AmbientBackground from '@/components/AmbientBackground';
 import ParticlesBackground from '@/components/ParticlesBackground';
@@ -127,67 +127,68 @@ export default function HomePage() {
     return <LoadingScreen />;
   }
 
-  return (
-    <div className="min-h-screen relative selection:bg-emerald-500/30" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
+  // Accent mapping variables taken directly from your events page config
+  const pillarAccents = [
+    { color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
+    { color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
+    { color: 'var(--accent-tertiary)', glow: 'rgba(255,45,155,0.12)' },
+  ];
 
-      {/* ── STYLING ENGINE FOR SYSTEM-WIDE SYNCHRONIZATION ── */}
+  return (
+    <div className="min-h-screen relative overflow-hidden" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
+
+      {/* ── DESIGN TOKENS ENGINE & BORDER-BEAM DEFINITION ── */}
       <style jsx global>{`
-        /* Global Grid Layout Alignment matching your Events background pattern */
-        .unified-theme-grid-body {
+        /* Architectural grid lines layout matching events overlay background */
+        .unified-homepage-context {
           background-size: 40px 40px;
           background-image: 
-            linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+          background-color: var(--bg-primary);
         }
 
-        /* Eradicates the solid grey container styles seen in screenshots and replaces with pure glass-strong tokens */
-        .unified-theme-grid-body .glass-strong,
-        .unified-theme-grid-body div[class*="bg-zinc-"],
-        .unified-theme-grid-body div[class*="bg-neutral-"],
-        .unified-theme-grid-body div[class*="bg-black/"],
-        .unified-theme-grid-body div[class*="bg-white/10"],
-        .unified-theme-grid-body div[class*="bg-white/5"],
-        .unified-theme-grid-body [class*="rounded-2xl"] {
-          background: rgba(13, 13, 15, 0.65) !important;
+        /* The exact structural keyframe definition needed for standard border beams */
+        @keyframes border-beam {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+
+        .animate-border-beam-line {
+          background-size: 200% 100%;
+          animation: border-beam 2s linear infinite;
+        }
+
+        /* Perfectly isolated card styling surface supporting both Light and Dark mode variations */
+        .unified-homepage-context .glass-strong {
+          background: var(--bg-surface, rgba(255, 255, 255, 0.45)) !important;
           backdrop-filter: blur(16px) saturate(120%) !important;
           -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
           border: 1px solid var(--border-subtle) !important;
+          transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Fixes color contrast issue: forces high readability across typography layers */
-        .unified-theme-grid-body h1,
-        .unified-theme-grid-body h2,
-        .unified-theme-grid-body h3,
-        .unified-theme-grid-body h4,
-        .unified-theme-grid-body div[class*="text-zinc-100"],
-        .unified-theme-grid-body div[class*="text-neutral-100"],
-        .unified-theme-grid-body div[class*="text-white"],
-        .unified-theme-grid-body span:not(.neon-text):not([class*="badge"]) {
-          color: var(--text-primary) !important;
-        }
-
-        .unified-theme-grid-body p,
-        .unified-theme-grid-body div[class*="text-zinc-400"],
-        .unified-theme-grid-body div[class*="text-neutral-400"],
-        .unified-theme-grid-body span[class*="text-muted"] {
-          color: var(--text-muted) !important;
-        }
-
-        /* Enforce absolute styling matching for dynamic UI badges */
-        .unified-theme-grid-body .badge {
-          background-color: transparent !important;
+        /* Consistent structural styling wrapper for context badges */
+        .unified-homepage-context .badge {
+          background: transparent !important;
           border: 1px solid var(--border-subtle) !important;
           color: var(--text-primary) !important;
           font-family: var(--font-mono), monospace;
           text-transform: uppercase;
           letter-spacing: 0.1em;
+          padding: 0.375rem 0.75rem;
+          border-radius: 0.375rem;
+          font-size: 0.75rem;
+          display: inline-flex;
+          align-items: center;
         }
       `}</style>
 
       <AmbientBackground />
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full overflow-hidden unified-theme-grid-body">
+      <div className="relative z-10 w-full overflow-hidden unified-homepage-context">
 
         {/* ── HERO SECTION ──────────────────────────── */}
         <section
@@ -217,8 +218,7 @@ export default function HomePage() {
             }}
             className="relative z-10 text-center max-w-6xl mx-auto transform-gpu"
           >
-            {/* Upper Badge Component */}
-            <div className="badge mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs">
+            <div className="badge mb-6 gap-2 !rounded-full">
               <span
                 className="w-1.5 h-1.5 rounded-full animate-pulse"
                 style={{ background: 'var(--accent-primary)' }}
@@ -226,24 +226,21 @@ export default function HomePage() {
               VIT Bhopal · Est. 2020
             </div>
 
-            {/* Neon Glowing Typography Header */}
-            <h1 className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] mb-5 tracking-tight">
+            <h1 className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] mb-5 tracking-tight" style={{ color: 'var(--text-primary)' }}>
               We Build
               <br />
               <span className="neon-text">Bit by Bit.</span>
             </h1>
 
-            {/* Description Subtext */}
             <p className="text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
               The elite technical incubator at VIT Bhopal. Where production-grade
               engineers, AI sovereigns, and open-source architects are forged.
             </p>
 
-            {/* Interactive Functional Actions */}
             <div className="flex flex-wrap gap-4 justify-center">
               <MagneticButton href="/events">
                 <button
-                  className="px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm"
+                  className="px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:opacity-90"
                   style={{
                     fontFamily: 'var(--font-syne)',
                     background: 'var(--accent-primary)',
@@ -258,7 +255,6 @@ export default function HomePage() {
                   className="px-6 py-3 rounded-full text-sm font-semibold glass-strong transition-all duration-300"
                   style={{
                     fontFamily: 'var(--font-syne)',
-                    border: '1px solid var(--border-subtle)',
                     color: 'var(--text-primary)',
                   }}
                 >
@@ -278,11 +274,9 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               className="glass-strong rounded-2xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-              style={{ border: '1px solid var(--border-subtle)' }}
             >
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col justify-center">
-                  {/* Fixed theme styling token mapping below */}
                   <div style={{ color: 'var(--text-primary)' }}>
                     <AnimatedCounter
                       value={stat.value}
@@ -312,8 +306,8 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="mb-12"
             >
-              <div className="badge mb-4 px-3 py-1 rounded-md text-xs">About Us</div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+              <div className="badge mb-4">About Us</div>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 Not just a club. <span className="neon-text">A movement.</span>
               </h2>
             </motion.div>
@@ -321,7 +315,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── CORE PILLARS CARD ARCHITECTURE ────────── */}
+        {/* ── CORE PILLARS SECTION ──────────────────── */}
         <section className="relative z-10 px-6 py-20">
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -330,7 +324,7 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <div className="badge mb-4 px-3 py-1 rounded-md text-xs mx-auto">Our Core Pillars</div>
+              <div className="badge mb-4 mx-auto">Our Core Pillars</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 What drives us forward
               </h2>
@@ -342,22 +336,19 @@ export default function HomePage() {
                   icon: <Cpu size={20} />,
                   title: 'Production Engineering',
                   desc: 'We build software that ships. From system design to deployment pipelines, every line of code meets industry standards — because university projects should look like startup launches.',
-                  color: 'var(--accent-primary)',
-                  glow: 'var(--accent-glow)',
+                  accent: pillarAccents[0],
                 },
                 {
                   icon: <Zap size={20} />,
                   title: 'AI Sovereignty',
                   desc: "We don't just use AI — we build it. Custom models, fine-tuned transformers, and sovereign inference pipelines that give us full ownership of the intelligence stack.",
-                  color: 'var(--accent-secondary)',
-                  glow: 'rgba(180,79,255,0.15)',
+                  accent: pillarAccents[1],
                 },
                 {
                   icon: <Globe size={20} />,
                   title: 'Open Source Impact',
                   desc: 'Our code powers real products used by thousands globally. We contribute to the commons, maintain high-quality repos, and build in public with zero compromise on quality.',
-                  color: 'var(--accent-tertiary)',
-                  glow: 'rgba(255,45,155,0.12)',
+                  accent: pillarAccents[2],
                 },
               ].map((pillar, i) => (
                 <motion.div
@@ -367,38 +358,47 @@ export default function HomePage() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
                   className="rounded-2xl p-6 md:p-8 glass-strong transition-all group relative overflow-hidden transform-gpu"
-                  style={{ border: '1px solid var(--border-subtle)' }}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 >
-                  {/* Hover glow borders implemented explicitly to match your EventCard design pattern */}
+                  {/* Outer / Inner tracking border glow highlight on Hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                    style={{ boxShadow: `inset 0 0 0 1px ${pillar.color}40` }}
+                    style={{ boxShadow: `inset 0 0 0 1px ${pillar.accent.color}40` }}
                   />
+
+                  {/* Active linear animated border-beam layout injected precisely via your events specification */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${pillar.accent.color}, transparent)`,
+                    }}
+                  />
+
+                  {/* Infinite radial glow backdrop orb mapping */}
                   <div
                     className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 blur-3xl pointer-events-none"
-                    style={{ background: pillar.color }}
+                    style={{ background: pillar.accent.color }}
                   />
 
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-all"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 relative z-10"
                     style={{
-                      background: pillar.glow,
-                      color: pillar.color,
-                      border: `1px solid ${pillar.color}30`,
+                      background: pillar.accent.glow,
+                      color: pillar.accent.color,
+                      border: `1px solid ${pillar.accent.color}30`,
                     }}
                   >
                     {pillar.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-3 leading-tight" style={{ color: 'var(--text-primary)' }}>
+                  <h3 className="text-xl font-bold mb-3 leading-tight relative z-10" style={{ color: 'var(--text-primary)' }}>
                     {pillar.title}
                   </h3>
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>
+                  <p className="text-sm leading-relaxed mb-5 relative z-10" style={{ color: 'var(--text-muted)' }}>
                     {pillar.desc}
                   </p>
                   <button
-                    className="flex items-center gap-2 text-sm font-semibold transition-all duration-200 mt-auto"
-                    style={{ color: pillar.color, fontFamily: 'var(--font-syne)' }}
+                    className="flex items-center gap-2 text-sm font-semibold transition-all duration-200 mt-auto relative z-10"
+                    style={{ color: pillar.accent.color, fontFamily: 'var(--font-syne)' }}
                   >
                     Learn More
                     <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -409,12 +409,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── DYNAMIC INJECTS: EVENT GALLERY & TESTIMONIALS ── */}
-        <section className="relative z-10 py-4">
+        {/* ── LIVE DATA STREAM GALLERIES & TESTIMONIALS ── */}
+        <section className="relative z-10">
           <EventGallery />
         </section>
 
-        <section className="relative z-10 py-4">
+        <section className="relative z-10">
           <Testimonials />
         </section>
 
@@ -427,13 +427,24 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               className="rounded-2xl p-8 md:p-12 glass-strong relative overflow-hidden shadow-sm"
-              style={{ border: '1px solid var(--border-subtle)' }}
             >
-              <div className="badge mb-6 inline-flex items-center mx-auto">
-                <Star size={12} className="mr-1.5" style={{ color: 'var(--accent-primary)' }} /> Open Recruitment
+              {/* Context active beam for the CTA Box layout block */}
+              <div
+                className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                style={{ boxShadow: `inset 0 0 0 1px var(--accent-primary)40` }}
+              />
+              <div
+                className="absolute top-0 left-0 right-0 h-px opacity-0 hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
+                style={{
+                  background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)`,
+                }}
+              />
+
+              <div className="badge mb-6 inline-flex items-center mx-auto gap-1.5">
+                <Star size={12} style={{ color: 'var(--accent-primary)' }} /> Open Recruitment
               </div>
 
-              <h2 className="text-2xl md:text-4xl font-bold mb-4 tracking-tight">
+              <h2 className="text-2xl md:text-4xl font-bold mb-4 tracking-tight" style={{ color: 'var(--text-primary)' }}>
                 Ready to build <span className="neon-text">something legendary?</span>
               </h2>
 
@@ -445,7 +456,7 @@ export default function HomePage() {
               <div className="flex gap-4 justify-center flex-wrap">
                 <MagneticButton href="/team">
                   <button
-                    className="px-5 py-2.5 rounded-full text-xs font-semibold"
+                    className="px-5 py-2.5 rounded-full text-xs font-semibold hover:opacity-90"
                     style={{
                       fontFamily: 'var(--font-syne)',
                       background: 'var(--accent-primary)',
@@ -460,7 +471,6 @@ export default function HomePage() {
                     className="px-5 py-2.5 rounded-full text-xs font-semibold glass-strong transition-colors"
                     style={{
                       fontFamily: 'var(--font-syne)',
-                      border: '1px solid var(--border-subtle)',
                       color: 'var(--text-primary)',
                     }}
                   >
@@ -498,7 +508,7 @@ export default function HomePage() {
                 <a
                   key={s}
                   href="#"
-                  className="text-xs font-semibold transition-colors"
+                  className="text-xs font-semibold transition-colors hover:text-current"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {s}
