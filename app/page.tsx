@@ -3,18 +3,28 @@
 import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { BentoGrid } from '@/components/BentoGrid';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { ArrowRight, Cpu, Zap, Globe, Star } from 'lucide-react';
+import {
+  ArrowRight,
+  Cpu,
+  Zap,
+  Globe,
+  Star,
+  ChevronRight,
+  Trophy,
+  Terminal,
+  Brain,
+  Code2,
+  Layers,
+  Rocket
+} from 'lucide-react';
 import Link from 'next/link';
 import AmbientBackground from '@/components/AmbientBackground';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import Image from 'next/image';
-import EventGallery from '@/components/EventGallery';
-import Testimonials from '@/components/Testimonials';
 
-/* ── Magnetic Button ─────────────────────────────────────── */
+/* ── Magnetic Button (With Events Page Syne Font) ────────── */
 function MagneticButton({
   children,
   className,
@@ -85,13 +95,160 @@ function FloatingParticle({ delay, x, y }: { delay: number; x: number; y: number
   );
 }
 
-/* ── Stats ───────────────────────────────────────────────── */
+/* ── Data Mapped to Events Structure ─────────────────────── */
 const STATS = [
   { value: 200, suffix: '+', label: 'Active Members' },
   { value: 48, suffix: '', label: 'Projects Shipped' },
   { value: 12, suffix: 'k+', label: 'GitHub Stars' },
   { value: 3, suffix: 'x', label: 'Hackathon Wins' },
 ];
+
+interface PillarItem {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  icon: React.ReactNode;
+  accentIndex: 0 | 1 | 2;
+}
+
+const PILLARS: PillarItem[] = [
+  {
+    id: 1,
+    title: 'Production Engineering',
+    description: 'We build software that ships. From system design to deployment pipelines, every line of code meets industry standards — because university projects should look like startup launches.',
+    tags: ['Next.js', 'Docker', 'CI/CD', 'Scale'],
+    icon: <Cpu size={20} />,
+    accentIndex: 0,
+  },
+  {
+    id: 2,
+    title: 'AI Sovereignty',
+    description: "We don't just use AI — we build it. Custom models, fine-tuned transformers, and sovereign inference pipelines that give us full ownership of the intelligence stack.",
+    tags: ['LLMs', 'Transformers', 'PyTorch'],
+    icon: <Brain size={20} />,
+    accentIndex: 1,
+  },
+  {
+    id: 3,
+    title: 'Open Source Impact',
+    description: 'Our code powers real products used by thousands globally. We contribute to the commons, maintain high-quality repos, and build in public with zero compromise on quality.',
+    tags: ['GitHub', 'Sovereign', 'Build In Public'],
+    icon: <Globe size={20} />,
+    accentIndex: 2,
+  },
+];
+
+/* ── Shared Exact Functional EventCard Block Layout ──────── */
+function HomepageCard({ item, index }: { item: PillarItem; index: number }) {
+  const accentVars = [
+    { color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
+    { color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
+    { color: 'var(--accent-tertiary)', glow: 'rgba(255,45,155,0.12)' },
+  ];
+  const accent = accentVars[item.accentIndex];
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ delay: index * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative rounded-2xl glass-strong overflow-hidden transform-gpu"
+      style={{ border: `1px solid var(--border-subtle)` }}
+      whileHover={{ y: -4, transition: { duration: 0.25 } }}
+    >
+      {/* Border beam on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+        style={{
+          boxShadow: `inset 0 0 0 1px ${accent.color}40`,
+        }}
+      />
+
+      {/* Animated beam line */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${accent.color}, transparent)`,
+          animation: 'border-beam 2s linear infinite',
+          backgroundSize: '200% 100%',
+        }}
+      />
+
+      {/* Glow blob */}
+      <div
+        className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 blur-3xl pointer-events-none"
+        style={{ background: accent.color }}
+      />
+
+      <div className="relative p-6 md:p-8">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4 mb-5">
+          <div
+            className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors duration-300"
+            style={{
+              background: accent.glow,
+              color: accent.color,
+              border: `1px solid ${accent.color}30`,
+            }}
+          >
+            {item.icon}
+          </div>
+          <div className="flex items-center gap-2">
+            <div
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ background: 'var(--accent-primary)' }}
+            />
+            <span
+              className="text-xs font-mono uppercase tracking-widest"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Core Pillar
+            </span>
+          </div>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-xl md:text-2xl font-bold mb-3 leading-tight">
+          {item.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>
+          {item.description}
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {item.tags.map((tag) => (
+            <span
+              key={tag}
+              className="px-2.5 py-1 rounded-md text-xs font-mono"
+              style={{
+                background: `${accent.color}12`,
+                color: accent.color,
+                border: `1px solid ${accent.color}25`,
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* CTA Link Action */}
+        <button
+          className="flex items-center gap-2 text-sm font-semibold transition-all duration-200"
+          style={{ color: accent.color, fontFamily: 'var(--font-syne)' }}
+        >
+          Learn More
+          <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
+    </motion.div>
+  );
+}
 
 /* ── Main Component ──────────────────────────────────────── */
 export default function HomePage() {
@@ -130,79 +287,25 @@ export default function HomePage() {
   }
 
   return (
-    <>
-      {/* 🛠️ COMPONENT LEVEL OVERRIDE: Pierces sub-component scopes dynamically independent of the theme engine implementation */}
-      <style jsx global>{`
-        /* Forces structural grid surfaces to act as transparent glass layers */
-        .home-view-container .glass-strong,
-        .home-view-container div[class*="bg-zinc-"],
-        .home-view-container div[class*="bg-neutral-"],
-        .home-view-container div[class*="bg-black/"],
-        .home-view-container div[class*="bg-white/10"],
-        .home-view-container div[class*="bg-white/5"] {
-          background: var(--bg-surface, rgba(255, 255, 255, 0.45)) !important;
-          backdrop-filter: blur(16px) saturate(120%) !important;
-          -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
-          border: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.08)) !important;
-        }
-
-        /* Forces clean token alignment for nested typographical frameworks */
-        .home-view-container h1,
-        .home-view-container h2,
-        .home-view-container h3,
-        .home-view-container h4,
-        .home-view-container div[class*="text-zinc-100"],
-        .home-view-container div[class*="text-neutral-100"],
-        .home-view-container div[class*="text-white"],
-        .home-view-container span:not(.neon-text) {
-          color: var(--text-primary) !important;
-        }
-
-        .home-view-container p,
-        .home-view-container div[class*="text-zinc-400"],
-        .home-view-container div[class*="text-neutral-400"] {
-          color: var(--text-muted) !important;
-        }
-
-        .home-view-container [class*="border-"] {
-          border-color: var(--border-subtle) !important;
-        }
-      `}</style>
-
+    <div className="min-h-screen" style={{ color: 'var(--text-primary)' }}>
       <AmbientBackground />
       <ParticlesBackground />
 
-      {/* Uses layout style bindings mapped directly to global CSS custom design properties */}
-      <div
-        className="relative z-10 w-full overflow-hidden home-view-container"
-        style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+      {/* ── HERO SECTION ──────────────────────────── */}
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden min-h-[100dvh] flex items-center justify-center px-6"
       >
-
-        {/* ── PARALLAX HERO ─────────────────────────── */}
-        <section
-          ref={heroRef}
-          className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
-          style={{ backgroundColor: 'transparent' }}
-        >
-          <div
-            className="hero-blur-orb w-[600px] h-[600px] absolute pointer-events-none"
-            style={{
-              background: 'var(--accent-primary)',
-              top: '10%',
-              left: '-10%',
-              opacity: 0.12,
-            }}
-          />
-          <div
-            className="hero-blur-orb w-[500px] h-[500px] absolute pointer-events-none"
-            style={{
-              background: 'var(--accent-secondary)',
-              bottom: '5%',
-              right: '-8%',
-              opacity: 0.08,
-            }}
-          />
-
+        <div
+          className="hero-blur-orb w-[500px] h-[500px]"
+          style={{
+            background: 'var(--accent-secondary)',
+            top: '-20%',
+            right: '-10%',
+            opacity: 0.12,
+          }}
+        />
+        <div className="max-w-6xl mx-auto text-center relative z-10">
           {particles.map((p) => (
             <FloatingParticle key={p.id} delay={p.delay} x={p.x} y={p.y} />
           ))}
@@ -214,71 +317,46 @@ export default function HomePage() {
               scale: heroScale,
               filter: heroBlur.get() > 0 ? `blur(${heroBlur.get()}px)` : undefined,
             }}
-            className="relative z-10 text-center px-6 max-w-6xl mx-auto transform-gpu"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex justify-center mb-8"
-            >
-              <div
-                className="badge glass-strong px-4 py-1.5 rounded-full text-xs font-mono tracking-wider flex items-center gap-2"
-                style={{ border: '1px solid var(--border-subtle)' }}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
-                  style={{ background: 'var(--accent-primary)' }}
-                />
-                <span style={{ color: 'var(--text-muted)' }}>VIT Bhopal · Est. 2020</span>
-              </div>
-            </motion.div>
+            {/* Badge matching Event Badge styles cleanly */}
+            <div className="badge mb-6 inline-flex mx-auto">
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: 'var(--accent-primary)' }}
+              />
+              VIT Bhopal · Est. 2020
+            </div>
 
-            {/* Title Headline Layout */}
-            <motion.h1
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.95] tracking-tight mb-6"
-            >
-              <span style={{ color: 'var(--text-primary)' }}>We Build</span>
+            <h1 className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] mb-5 tracking-tight">
+              We Build
               <br />
               <span className="neon-text">Bit by Bit.</span>
-            </motion.h1>
+            </h1>
 
-            {/* Headline Subtext */}
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-medium"
-              style={{ color: 'var(--text-muted)' }}
-            >
+            <p className="text-base md:text-lg max-w-xl mx-auto mb-8" style={{ color: 'var(--text-muted)' }}>
               The elite technical incubator at VIT Bhopal. Where production-grade
               engineers, AI sovereigns, and open-source architects are forged.
-            </motion.p>
+            </p>
 
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-4 justify-center"
-            >
-              <MagneticButton>
+            {/* Actions UI Block */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              <MagneticButton href="/events">
                 <button
-                  className="px-6 py-3 rounded-xl font-semibold shadow-md transition-all flex items-center gap-2 text-white"
-                  style={{ background: 'var(--accent-primary)' }}
+                  className="px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm"
+                  style={{
+                    fontFamily: 'var(--font-syne)',
+                    background: 'var(--accent-primary)',
+                    color: 'var(--bg-primary)',
+                  }}
                 >
                   Explore Our Work
-                  <ArrowRight size={16} />
                 </button>
               </MagneticButton>
               <MagneticButton href="/events">
                 <button
-                  className="px-6 py-3 rounded-xl btn-ghost glass-strong font-medium transition-all"
+                  className="px-6 py-3 rounded-full text-sm font-semibold glass-strong transition-all duration-300"
                   style={{
+                    fontFamily: 'var(--font-syne)',
                     border: '1px solid var(--border-subtle)',
                     color: 'var(--text-primary)',
                   }}
@@ -286,299 +364,162 @@ export default function HomePage() {
                   View Events
                 </button>
               </MagneticButton>
-            </motion.div>
+            </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* Indicator */}
+      {/* ── STATS SECTION ─────────────────────────── */}
+      <section className="px-6 mb-16 relative z-10">
+        <div className="max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="glass-strong rounded-2xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+            style={{ border: '1px solid var(--border-subtle)' }}
           >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-6 h-10 rounded-full border-2 flex items-start justify-center pt-2 mx-auto"
-              style={{ borderColor: 'var(--border-subtle)' }}
-            >
-              <div
-                className="w-1 h-2 rounded-full"
-                style={{ background: 'var(--accent-primary)' }}
-              />
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* ── STATS SECTION ─────────────────────────── */}
-        <motion.section
-          className="py-16 glass-strong"
-          style={{
-            borderTop: '1px solid var(--border-subtle)',
-            borderBottom: '1px solid var(--border-subtle)',
-            backgroundColor: 'transparent'
-          }}
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {STATS.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="text-center"
-                >
-                  <div style={{ color: 'var(--text-primary)' }}>
-                    <AnimatedCounter
-                      value={stat.value}
-                      suffix={stat.suffix}
-                      className="text-3xl md:text-4xl font-bold font-mono tracking-tight"
-                    />
-                  </div>
-                  <p
-                    className="text-xs uppercase tracking-widest mt-2 font-semibold"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── BENTO SECTION ─────────────────────────── */}
-        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-16"
-            >
-              <div
-                className="badge px-3 py-1 rounded-md text-xs font-mono mb-4 inline-block"
-                style={{
-                  background: 'var(--accent-glow)',
-                  color: 'var(--accent-primary)',
-                  border: '1px solid var(--border-subtle)',
-                }}
-              >
-                About Us
-              </div>
-              <h2
-                className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight leading-tight"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                Not just a club. <span className="neon-text">A movement.</span>
-              </h2>
-            </motion.div>
-            <BentoGrid />
-          </div>
-        </section>
-
-        {/* ── PILLARS SECTION ───────────────────────── */}
-        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <div
-                className="badge px-3 py-1 rounded-md text-xs font-mono mb-4 inline-block mx-auto"
-                style={{
-                  background: 'rgba(180,79,255,0.1)',
-                  color: 'var(--accent-secondary)',
-                  border: '1px solid var(--border-subtle)',
-                }}
-              >
-                Our Core Pillars
-              </div>
-              <h2
-                className="text-3xl md:text-4xl font-bold tracking-tight"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                What drives us forward
-              </h2>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                {
-                  icon: <Cpu size={24} />,
-                  title: 'Production Engineering',
-                  desc: 'We build software that ships. From system design to deployment pipelines, every line of code meets industry standards — because university projects should look like startup launches.',
-                  color: 'var(--accent-primary)',
-                  glow: 'var(--accent-glow)',
-                },
-                {
-                  icon: <Zap size={24} />,
-                  title: 'AI Sovereignty',
-                  desc: "We don't just use AI — we build it. Custom models, fine-tuned transformers, and sovereign inference pipelines that give us full ownership of the intelligence stack.",
-                  color: 'var(--accent-secondary)',
-                  glow: 'rgba(180,79,255,0.15)',
-                },
-                {
-                  icon: <Globe size={24} />,
-                  title: 'Open Source Impact',
-                  desc: 'Our code powers real products used by thousands globally. We contribute to the commons, maintain high-quality repos, and build in public with zero compromise on quality.',
-                  color: 'var(--accent-tertiary)',
-                  glow: 'rgba(255,45,155,0.12)',
-                },
-              ].map((pillar, i) => (
-                <motion.div
-                  key={pillar.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="rounded-2xl p-8 glass-strong hover:scale-[1.01] transition-all group"
-                  style={{ border: '1px solid var(--border-subtle)' }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center mb-5 transition-all"
-                    style={{
-                      background: pillar.glow,
-                      color: pillar.color,
-                      border: `1px solid ${pillar.color}30`,
-                    }}
-                  >
-                    {pillar.icon}
-                  </div>
-                  <h3
-                    className="text-lg font-bold mb-2"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {pillar.title}
-                  </h3>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {pillar.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── JOIN CTA ──────────────────────────────── */}
-        <section className="relative z-10 px-6 py-24" style={{ backgroundColor: 'transparent' }}>
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="rounded-3xl p-12 glass-strong relative overflow-hidden"
-              style={{ border: '1px solid var(--border-subtle)' }}
-            >
-              <div
-                className="badge px-3 py-1 rounded-md text-xs font-mono mb-6 inline-flex items-center mx-auto"
-                style={{
-                  background: 'rgba(245,158,11,0.1)',
-                  color: '#d97706',
-                  border: '1px solid var(--border-subtle)',
-                }}
-              >
-                <Star size={12} className="mr-1.5" /> Open Recruitment
-              </div>
-
-              <h2
-                className="text-3xl md:text-5xl font-bold mb-4 tracking-tight leading-tight"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                Ready to build
-                <br />
-                <span className="neon-text">something legendary?</span>
-              </h2>
-
-              <p
-                className="text-sm max-w-md mx-auto mb-8 leading-relaxed"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Join the 1% of VIT Bhopal who ship real projects, win national hackathons,
-                and leave a permanent mark on the open-source world.
-              </p>
-
-              <div className="flex gap-4 justify-center flex-wrap">
-                <MagneticButton href="/team">
-                  <button
-                    className="px-5 py-2.5 rounded-xl font-semibold text-white text-sm"
-                    style={{ background: 'var(--accent-primary)' }}
-                  >
-                    Meet the Team
-                  </button>
-                </MagneticButton>
-                <MagneticButton href="/events">
-                  <button
-                    className="px-5 py-2.5 rounded-xl btn-ghost glass-strong font-medium transition-colors text-sm"
-                    style={{
-                      border: '1px solid var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                  >
-                    Our Events
-                  </button>
-                </MagneticButton>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        <EventGallery />
-        <Testimonials />
-
-        {/* ── FOOTER ────────────────────────────────── */}
-        <footer
-          className="relative z-10 border-t px-6 py-10"
-          style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'transparent' }}
-        >
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-
-            <div className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt="Bit By Bit Logo"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-              <span className="font-syne font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-                Bit By Bit
-              </span>
-            </div>
-
-            <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
-              © 2026 Bit by Bit Technical Club · VIT Bhopal
-            </p>
-
-            <div className="flex gap-6">
-              {['GitHub', 'Twitter', 'LinkedIn'].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  className="text-xs font-medium transition-colors hover:text-current"
+            {STATS.map((stat, i) => (
+              <div key={stat.label} className="flex flex-col justify-center">
+                <div style={{ color: 'var(--text-primary)' }}>
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    className="text-3xl md:text-4xl font-bold font-mono tracking-tight"
+                  />
+                </div>
+                <p
+                  className="text-xs uppercase tracking-widest mt-2 font-mono"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  {s}
-                </a>
-              ))}
-            </div>
-          </div>
-        </footer>
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-      </div>
-    </>
+      {/* ── PILLARS SECTION (REPLACES GENERIC GRID) ── */}
+      <section className="px-6 pb-24 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-12"
+          >
+            <div className="badge mb-4">Our Core Mission</div>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
+              Not just a club. <span className="neon-text">A movement.</span>
+            </h2>
+          </motion.div>
+
+          {/* Cards Grid using identical layouts, borders, shadows & text properties */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatePresence mode="popLayout">
+              {PILLARS.map((pillar, i) => (
+                <HomepageCard key={pillar.id} item={pillar} index={i} />
+              ))}
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* ── RECRUITMENT CTA ────────────────────────── */}
+      <section className="px-6 pb-24 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-2xl p-8 md:p-12 glass-strong text-center relative overflow-hidden"
+            style={{ border: '1px solid var(--border-subtle)' }}
+          >
+            <div className="badge mb-6 inline-flex items-center mx-auto">
+              <Star size={12} className="mr-1.5" style={{ color: 'var(--accent-primary)' }} />
+              Open Recruitment
+            </div>
+
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 tracking-tight">
+              Ready to build <span className="neon-text">something legendary?</span>
+            </h2>
+
+            <p className="text-sm max-w-md mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              Join the 1% of VIT Bhopal who ship real projects, win national hackathons,
+              and leave a permanent mark on the open-source world.
+            </p>
+
+            <div className="flex gap-4 justify-center flex-wrap">
+              <MagneticButton href="/team">
+                <button
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold"
+                  style={{
+                    fontFamily: 'var(--font-syne)',
+                    background: 'var(--accent-primary)',
+                    color: 'var(--bg-primary)',
+                  }}
+                >
+                  Meet the Team
+                </button>
+              </MagneticButton>
+              <MagneticButton href="/events">
+                <button
+                  className="px-5 py-2.5 rounded-full text-xs font-semibold glass-strong transition-colors"
+                  style={{
+                    fontFamily: 'var(--font-syne)',
+                    border: '1px solid var(--border-subtle)',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  Our Events
+                </button>
+              </MagneticButton>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ────────────────────────────────── */}
+      <footer
+        className="relative z-10 border-t px-6 py-10"
+        style={{ borderColor: 'var(--border-subtle)' }}
+      >
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/logo.png"
+              alt="Bit By Bit Logo"
+              width={45}
+              height={45}
+              className="object-contain"
+            />
+            <span className="font-bold text-lg" style={{ fontFamily: 'var(--font-syne)' }}>
+              Bit By Bit
+            </span>
+          </div>
+
+          <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+            © 2026 Bit by Bit Technical Club · VIT Bhopal
+          </p>
+
+          <div className="flex gap-6">
+            {['GitHub', 'Twitter', 'LinkedIn'].map((s) => (
+              <a
+                key={s}
+                href="#"
+                className="text-xs font-semibold transition-colors"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {s}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
