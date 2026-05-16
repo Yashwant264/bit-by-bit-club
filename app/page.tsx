@@ -131,20 +131,29 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 🛠️ Scoped CSS injection to override hardcoded dark surfaces in child components ONLY when light mode is active */}
+      {/* Dynamic global layout selectors mapped to clean frosted-glass surfaces */}
       <style jsx global>{`
-        html:not(.dark) .home-light-override [class*="bg-neutral-"],
-        html:not(.dark) .home-light-override [class*="bg-zinc-"],
-        html:not(.dark) .home-light-override [class*="bg-black"],
-        html:not(.dark) .home-light-override .glass-strong,
-        html:not(.dark) .home-light-override [class*="border-zinc-800"],
-        html:not(.dark) .home-light-override [class*="border-neutral-800"] {
-          background: rgba(255, 255, 255, 0.4) !important;
-          backdrop-filter: blur(12px) !important;
-          -webkit-backdrop-filter: blur(12px) !important;
-          border-color: var(--border-subtle) !important;
+        html:not(.dark) .home-light-override,
+        html:not(.dark) .home-light-override section {
+          background-color: transparent !important;
         }
-        
+
+        html:not(.dark) .home-light-override .glass-strong,
+        html:not(.dark) .home-light-override [class*="bg-zinc-"],
+        html:not(.dark) .home-light-override [class*="bg-neutral-"],
+        html:not(.dark) .home-light-override [class*="bg-black/"],
+        html:not(.dark) .home-light-override [class*="bg-white/"] {
+          background: rgba(255, 255, 255, 0.45) !important;
+          backdrop-filter: blur(16px) saturate(120%) !important;
+          -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+          border-color: rgba(0, 0, 0, 0.06) !important;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02) !important;
+        }
+
+        html:not(.dark) .home-light-override [class*="border-"] {
+          border-color: rgba(0, 0, 0, 0.06) !important;
+        }
+
         html:not(.dark) .home-light-override h1,
         html:not(.dark) .home-light-override h2,
         html:not(.dark) .home-light-override h3,
@@ -152,21 +161,20 @@ export default function HomePage() {
         html:not(.dark) .home-light-override [class*="text-zinc-100"],
         html:not(.dark) .home-light-override [class*="text-neutral-100"],
         html:not(.dark) .home-light-override [class*="text-white"] {
-          color: var(--text-primary) !important;
+          color: #0f172a !important;
         }
 
         html:not(.dark) .home-light-override p,
         html:not(.dark) .home-light-override span:not(.neon-text),
         html:not(.dark) .home-light-override [class*="text-zinc-400"],
         html:not(.dark) .home-light-override [class*="text-neutral-400"] {
-          color: var(--text-muted) !important;
+          color: #475569 !important;
         }
       `}</style>
 
       <AmbientBackground />
       <ParticlesBackground />
 
-      {/* 🎯 Applied the structural 'home-light-override' controller class here */}
       <div className="relative z-10 w-full overflow-hidden home-light-override">
 
         {/* ── PARALLAX HERO ─────────────────────────── */}
@@ -174,14 +182,13 @@ export default function HomePage() {
           ref={heroRef}
           className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
         >
-          {/* Theme Radial Glow Orbs */}
           <div
             className="hero-blur-orb w-[600px] h-[600px] absolute pointer-events-none"
             style={{
               background: 'var(--accent-primary)',
               top: '10%',
               left: '-10%',
-              opacity: 0.15,
+              opacity: 0.12,
             }}
           />
           <div
@@ -190,7 +197,7 @@ export default function HomePage() {
               background: 'var(--accent-secondary)',
               bottom: '5%',
               right: '-8%',
-              opacity: 0.1,
+              opacity: 0.08,
             }}
           />
 
