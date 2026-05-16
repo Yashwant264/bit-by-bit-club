@@ -3,8 +3,12 @@
 import Lenis from 'lenis';
 import { useEffect } from 'react';
 
-export default function SmoothScroll() {
+export default function SmoothScroll({ children }: { children: React.ReactNode }) {
     useEffect(() => {
+        if (typeof window !== 'undefined' && (window.innerWidth < 768 || navigator.maxTouchPoints > 0)) {
+            return;
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
             smoothWheel: true,
@@ -22,5 +26,5 @@ export default function SmoothScroll() {
         };
     }, []);
 
-    return null;
+    return <>{children}</>;
 }

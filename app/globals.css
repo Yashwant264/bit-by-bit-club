@@ -576,3 +576,14 @@ pre,
     transform: translateX(300%);
   }
 }
+
+/* Keep smooth scroll for desktop, but let mobile handle touch natively */
+@media (max-width: 767px) {
+
+  html,
+  body {
+    scroll-behavior: auto !important;
+    overflow-x: hidden;
+    /* Prevents tiny horizontal wobbles that cause lag */
+  }
+}
