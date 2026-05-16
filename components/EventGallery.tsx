@@ -59,8 +59,8 @@ export default function EventGallery() {
                                 }}
                             />
                             <Image
-                                src={img}
-                                alt="event"
+                                src={encodeURI(img)}
+                                alt={`Event ${index + 1}`}
                                 width={600}
                                 height={400}
                                 className="w-full h-[260px] object-cover"
