@@ -587,3 +587,19 @@ pre,
     /* Prevents tiny horizontal wobbles that cause lag */
   }
 }
+
+/* 📱 Premium Touch-Momentum Scroll Tuning for Mobile Devices */
+@media (max-width: 767px) {
+
+  html,
+  body {
+    /* Enables standard smooth scrolling transitions for element jumps */
+    scroll-behavior: smooth !important;
+
+    /* Forces iOS Safari and Android Chrome to use hardware-accelerated momentum */
+    -webkit-overflow-scrolling: touch !important;
+
+    /* Prevents frustrating horizontal layout shifts while scrolling vertically */
+    overflow-x: hidden;
+  }
+}

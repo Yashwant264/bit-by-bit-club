@@ -132,7 +132,7 @@ export default function HomePage() {
     <>
       <AmbientBackground />
       <ParticlesBackground />
-      <div className="relative">
+      <div className="relative bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white transition-colors duration-300">
         {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
           ref={heroRef}
