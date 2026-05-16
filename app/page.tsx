@@ -268,31 +268,68 @@ export default function HomePage() {
         {/* ── STATS SECTION ─────────────────────────── */}
         <section className="px-6 mb-16 relative z-10">
           <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-strong rounded-2xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-            >
-              {STATS.map((stat) => (
-                <div key={stat.label} className="flex flex-col justify-center">
-                  <div style={{ color: 'var(--text-primary)' }}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: 200, suffix: '+', label: 'Active Members', color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
+                { value: 48, suffix: '', label: 'Projects Shipped', color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
+                { value: 12, suffix: 'k+', label: 'GitHub Stars', color: 'var(--accent-tertiary)', glow: 'rgba(255,45,155,0.12)' },
+                { value: 3, suffix: 'x', label: 'Hackathon Wins', color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, duration: 0.5 }}
+                  className="rounded-2xl p-6 text-center transition-all group relative overflow-hidden transform-gpu flex flex-col justify-center min-h-[120px]"
+                  style={{
+                    background: 'var(--bg-surface)',
+                    border: '1px solid var(--border-subtle)',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)'
+                  }}
+                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                >
+                  {/* Outer tracking border glow highlight on Hover */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
+                    style={{ boxShadow: `inset 0 0 0 1px ${stat.color}40` }}
+                  />
+
+                  {/* Active animated linear border beam */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${stat.color}, transparent)`,
+                      backgroundSize: '200% 100%',
+                    }}
+                  />
+
+                  {/* Soft background ambient glow backdrop */}
+                  <div
+                    className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-0 group-hover:opacity-10 transition-all duration-700 blur-2xl pointer-events-none"
+                    style={{ background: stat.color }}
+                  />
+
+                  {/* High Contrast Counters */}
+                  <div className="relative z-10" style={{ color: 'var(--text-primary)' }}>
                     <AnimatedCounter
                       value={stat.value}
                       suffix={stat.suffix}
-                      className="text-3xl md:text-4xl font-bold font-mono tracking-tight"
+                      className="text-3xl md:text-4xl font-mono font-bold tracking-tight"
                     />
                   </div>
+
+                  {/* High Contrast Labels */}
                   <p
-                    className="text-xs uppercase tracking-widest mt-2 font-mono font-semibold"
+                    className="text-[10px] md:text-xs uppercase tracking-widest mt-2 font-mono font-semibold relative z-10"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     {stat.label}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -414,8 +451,29 @@ export default function HomePage() {
           <EventGallery />
         </section>
 
-        <section className="relative z-10">
-          <Testimonials />
+        {/* ── TESTIMONIALS SECTION ── */}
+        <section className="relative z-10 px-6 py-20">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <div
+                className="mb-4 mx-auto px-4 py-1.5 rounded-full text-xs font-mono font-semibold tracking-widest uppercase border inline-flex items-center"
+                style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+              >
+                Community Reviews
+              </div>
+              <h2 className="text-3xl md:text-4xl font-syne font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+                What our members say
+              </h2>
+            </motion.div>
+
+            {/* Renders your custom testimonials file with proper alignment */}
+            <Testimonials />
+          </div>
         </section>
 
         {/* ── CALL TO ACTION SECTION ────────────────── */}
