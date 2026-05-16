@@ -14,7 +14,6 @@ import Image from 'next/image';
 import EventGallery from '@/components/EventGallery';
 import Testimonials from '@/components/Testimonials';
 
-
 /* ── Magnetic Button ─────────────────────────────────────── */
 function MagneticButton({
   children,
@@ -132,10 +131,43 @@ export default function HomePage() {
 
   return (
     <>
+      {/* 🛠️ Scoped CSS injection to override hardcoded dark surfaces in child components ONLY when light mode is active */}
+      <style jsx global>{`
+        html:not(.dark) .home-light-override [class*="bg-neutral-"],
+        html:not(.dark) .home-light-override [class*="bg-zinc-"],
+        html:not(.dark) .home-light-override [class*="bg-black"],
+        html:not(.dark) .home-light-override .glass-strong,
+        html:not(.dark) .home-light-override [class*="border-zinc-800"],
+        html:not(.dark) .home-light-override [class*="border-neutral-800"] {
+          background: rgba(255, 255, 255, 0.4) !important;
+          backdrop-filter: blur(12px) !important;
+          -webkit-backdrop-filter: blur(12px) !important;
+          border-color: var(--border-subtle) !important;
+        }
+        
+        html:not(.dark) .home-light-override h1,
+        html:not(.dark) .home-light-override h2,
+        html:not(.dark) .home-light-override h3,
+        html:not(.dark) .home-light-override h4,
+        html:not(.dark) .home-light-override [class*="text-zinc-100"],
+        html:not(.dark) .home-light-override [class*="text-neutral-100"],
+        html:not(.dark) .home-light-override [class*="text-white"] {
+          color: var(--text-primary) !important;
+        }
+
+        html:not(.dark) .home-light-override p,
+        html:not(.dark) .home-light-override span:not(.neon-text),
+        html:not(.dark) .home-light-override [class*="text-zinc-400"],
+        html:not(.dark) .home-light-override [class*="text-neutral-400"] {
+          color: var(--text-muted) !important;
+        }
+      `}</style>
+
       <AmbientBackground />
       <ParticlesBackground />
 
-      <div className="relative z-10 w-full overflow-hidden">
+      {/* 🎯 Applied the structural 'home-light-override' controller class here */}
+      <div className="relative z-10 w-full overflow-hidden home-light-override">
 
         {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
