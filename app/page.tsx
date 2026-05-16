@@ -281,12 +281,12 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05, duration: 0.5 }}
-                  className="rounded-2xl p-6 text-center transition-all group relative overflow-hidden transform-gpu flex flex-col justify-center min-h-[120px]"
+                  className="rounded-2xl p-6 text-center transition-all group relative overflow-hidden transform-gpu flex flex-col justify-center min-h-[140px] dark:bg-zinc-900/90 bg-white/95"
                   style={{
-                    background: 'var(--bg-surface)',
                     border: '1px solid var(--border-subtle)',
-                    backdropFilter: 'blur(12px)',
-                    WebkitBackdropFilter: 'blur(12px)'
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.03)'
                   }}
                   whileHover={{ y: -4, transition: { duration: 0.25 } }}
                 >
