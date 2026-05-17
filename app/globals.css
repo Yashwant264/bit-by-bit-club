@@ -59,23 +59,23 @@
   --text-muted: #6B6878;
   --text-accent: #F0EDE8;
 
-  --accent-primary: #00FF8A;
-  /* Toxic green */
+  --accent-primary: #3B82F6;
+  /* Sky dancer */
   --accent-secondary: #B44FFF;
   /* Deep purple */
   --accent-tertiary: #FF2D9B;
   /* Cyber pink */
-  --accent-glow: rgba(0, 255, 138, 0.2);
+  --accent-glow: rgba(59, 130, 246, 0.2);
 
   --border-subtle: rgba(240, 237, 232, 0.06);
   --border-strong: rgba(240, 237, 232, 0.12);
-  --border-accent: rgba(0, 255, 138, 0.35);
+  --border-accent: rgba(59, 130, 246, 0.35);
 
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 255, 138, 0.1);
-  --shadow-accent: 0 0 60px rgba(0, 255, 138, 0.15), 0 0 120px rgba(180, 79, 255, 0.08);
+  --shadow-accent: 0 0 60px rgba(59, 130, 246, 0.15), 0 0 120px rgba(180, 79, 255, 0.08);
 
-  --mesh-color-1: rgba(0, 255, 138, 0.04);
+  --mesh-color-1: rgba(59, 130, 246, 0.04);
   --mesh-color-2: rgba(180, 79, 255, 0.04);
   --mesh-color-3: rgba(255, 45, 155, 0.03);
   --mesh-grid: rgba(240, 237, 232, 0.04);

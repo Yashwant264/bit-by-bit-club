@@ -467,14 +467,21 @@ export default function HomePage() {
             </p>
 
             <div className="flex gap-6">
-              {['GitHub', 'Twitter', 'LinkedIn'].map((s) => (
+              {[
+                { name: "GitHub", link: "https://github.com/yourgithub" },
+                { name: "Twitter", link: "https://twitter.com/yourtwitter" },
+                { name: "LinkedIn", link: "https://linkedin.com/in/yourlinkedin" },
+                { name: "Instagram", link: "https://www.instagram.com/bitbybit_vitb/" },
+              ].map((s) => (
                 <a
-                  key={s}
-                  href="#"
+                  key={s.name}
+                  href={s.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-xs font-medium transition-colors hover:text-current"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{ color: "var(--text-muted)" }}
                 >
-                  {s}
+                  {s.name}
                 </a>
               ))}
             </div>

@@ -24,10 +24,10 @@ import type { Member } from '@/app/team/TeamCard';
 const LEADERSHIP: Member[] = [
   {
     id: 1,
-    name: 'Aryan Mehta',
+    name: 'Atherva Sahai',
     role: 'President',
-    year: 'Final Year · CSE',
-    photo: '/team/aryan-mehta.jpg',
+    year: 'Third Year · CSE',
+    photo: '/team/atherva-sahai.jpg',
     accentIndex: 0,
     socials: { github: '#', linkedin: '#', twitter: '#' },
     message:
@@ -35,10 +35,10 @@ const LEADERSHIP: Member[] = [
   },
   {
     id: 2,
-    name: 'Priya Sharma',
+    name: 'Chavi Agrawal',
     role: 'Vice President',
-    year: 'Third Year · CSE-AI',
-    photo: '/team/priya-sharma.jpg',
+    year: 'Third Year · CSE',
+    photo: '/team/chavi-agrawal.jpg',
     accentIndex: 1,
     socials: { github: '#', linkedin: '#', twitter: '#' },
     message:
@@ -46,10 +46,10 @@ const LEADERSHIP: Member[] = [
   },
   {
     id: 3,
-    name: 'Rohan Verma',
+    name: 'Jiya Arora',
     role: 'General Secretary',
-    year: 'Third Year · IT',
-    photo: '/team/rohan-verma.jpg',
+    year: 'Third Year · CSE',
+    photo: '/team/jiya-arora.jpg',
     accentIndex: 2,
     socials: { github: '#', linkedin: '#', instagram: '#' },
     message:
@@ -78,9 +78,9 @@ const DEPARTMENTS: Department[] = [
     label: 'Technical',
     icon: <Code2 size={15} />,
     members: [
-      { id: 101, name: 'Sneha Iyer', role: 'Technical Lead', tier: 'Lead', year: 'Final Year · CSE', photo: '/team/sneha-iyer.jpg', accentIndex: 0, socials: { github: '#', linkedin: '#' } },
-      { id: 102, name: 'Dev Patel', role: 'Technical Co-Lead', tier: 'Co-Lead', year: 'Third Year · CSE', photo: '/team/dev-patel.jpg', accentIndex: 1, socials: { github: '#', twitter: '#' } },
-      { id: 103, name: 'Kavya Nair', role: 'Core Member', tier: 'Core Member', year: 'Third Year · CSE', photo: '/team/kavya-nair.jpg', accentIndex: 2, socials: { github: '#', linkedin: '#' } },
+      { id: 101, name: 'Vedant Mishra', role: 'Technical Lead', tier: 'Lead', year: 'Third Year · CSE', photo: '/team/vedant-mishra.jpg', accentIndex: 0, socials: { github: '#', linkedin: '#' } },
+      { id: 102, name: 'Dipanshu Joshi', role: 'Technical Co-Lead', tier: 'Co-Lead', year: 'Third Year · CSE', photo: '/team/dipanshu-joshi.jpg', accentIndex: 1, socials: { github: '#', twitter: '#' } },
+      { id: 103, name: 'Yashwant Sonawane', role: 'Core Member', tier: 'Core Member', year: 'First Year · CSE(AIML)', photo: '/team/yashwant-sonawane.jpg', accentIndex: 2, socials: { github: '#', linkedin: '#' } },
       { id: 104, name: 'Aditya Rao', role: 'Core Member', tier: 'Core Member', year: 'Second Year · IT', photo: '/team/aditya-rao.jpg', accentIndex: 0, socials: { github: '#' } },
       { id: 105, name: 'Neha Krishnan', role: 'Core Member', tier: 'Core Member', year: 'Second Year · CSE', photo: '/team/neha-krishnan.jpg', accentIndex: 1, socials: { github: '#', linkedin: '#' } },
       { id: 106, name: 'Siddharth Roy', role: 'Core Member', tier: 'Core Member', year: 'First Year · CSE-AI', photo: '/team/siddharth-roy.jpg', accentIndex: 2, socials: { github: '#' } },
