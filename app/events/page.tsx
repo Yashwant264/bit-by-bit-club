@@ -321,13 +321,34 @@ export default function EventsPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="glass rounded-full p-1.5 inline-flex gap-1 no-scrollbar overflow-x-auto"
+            className="
+  glass
+  rounded-full
+  p-1.5
+  flex
+  gap-1
+  overflow-x-auto
+  no-scrollbar
+  whitespace-nowrap
+  w-full
+  md:w-fit
+"
           >
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all duration-300"
+                className="
+  px-4
+  py-2
+  rounded-full
+  text-sm
+  font-semibold
+  whitespace-nowrap
+  shrink-0
+  transition-all
+  duration-300
+"
                 style={{
                   fontFamily: 'var(--font-syne)',
                   background:
