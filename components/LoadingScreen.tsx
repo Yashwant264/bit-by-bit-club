@@ -11,7 +11,7 @@ export default function LoadingScreen() {
         {/* Grid Background */}
         <div className="absolute inset-0 -z-10 overflow-hidden bg-black">
           {/* Top Glow */}
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px]" />
 
           {/* Bottom Glow */}
           <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[120px]" />
@@ -23,11 +23,11 @@ export default function LoadingScreen() {
           <div className="relative">
 
             {/* Glow Behind Logo */}
-            <div className="absolute inset-0 rounded-full bg-emerald-500/30 blur-3xl animate-pulse" />
+            <div className="absolute inset-0 rounded-full bg-blue-500/30 blur-3xl animate-pulse" />
 
             <div className="absolute inset-0 animate-pulse opacity-20">
 
-              <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-500/20" />
+              <div className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-500/20" />
 
             </div>
 
@@ -43,7 +43,7 @@ export default function LoadingScreen() {
 
           {/* Club Name */}
           <h1 className="mt-8 text-3xl sm:text-5xl md:text-7xl font-black tracking-[0.15em] sm:tracking-[0.3em] text-white whitespace-nowrap">
-            <span className="text-emerald-400">BIT</span> BY <span className="text-emerald-400">BIT</span>
+            <span className="text-blue-400">BIT</span> BY <span className="text-blue-400">BIT</span>
           </h1>
 
           {/* Subtitle */}
@@ -52,7 +52,7 @@ export default function LoadingScreen() {
           </p>
           <div className="mt-10 w-72 h-[4px] overflow-hidden rounded-full bg-gray-800">
 
-            <div className="h-full w-1/2 bg-emerald-400 animate-[loading_1.5s_linear_infinite]" />
+            <div className="h-full w-1/2 bg-blue-400 animate-[loading_1.5s_linear_infinite]" />
 
           </div>
 
