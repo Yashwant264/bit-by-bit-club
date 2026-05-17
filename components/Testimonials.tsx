@@ -65,13 +65,21 @@ export default function Testimonials() {
                                     backgroundSize: '200% 100%',
                                 }}
                             />
-                            <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                            <p
+                                className="text-lg leading-relaxed mb-6"
+                                style={{ color: 'var(--text-secondary)' }}
+                            >
                                 "{item.review}"
                             </p>
 
                             <div>
                                 <h3 className="text-2xl font-semibold text-black dark:text-white">{item.name}</h3>
-                                <p className="text-lg leading-relaxed text-green-400 text-sm">{item.role}</p>
+                                <p
+                                    className="text-sm"
+                                    style={{ color: 'var(--accent-primary)' }}
+                                >
+                                    {item.role}
+                                </p>
                             </div>
                         </motion.div>
                     ))}
