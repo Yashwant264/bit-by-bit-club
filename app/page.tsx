@@ -1,17 +1,20 @@
 'use client';
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { BentoGrid } from '@/components/BentoGrid';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
-import { Cpu, Zap, Globe, Star, ChevronRight } from 'lucide-react';
+import { ArrowRight, Cpu, Zap, Globe, Star } from 'lucide-react';
 import Link from 'next/link';
 import AmbientBackground from '@/components/AmbientBackground';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import Image from 'next/image';
 import EventGallery from '@/components/EventGallery';
 import Testimonials from '@/components/Testimonials';
+
+
 
 /* ── Magnetic Button ─────────────────────────────────────── */
 function MagneticButton({
@@ -67,12 +70,12 @@ function FloatingParticle({ delay, x, y }: { delay: number; x: number; y: number
         left: `${x}%`,
         top: `${y}%`,
         background: 'var(--accent-primary)',
-        boxShadow: '0 0 8px var(--accent-primary)',
+        boxShadow: '0 0 6px var(--accent-primary)',
       }}
       animate={{
         y: [0, -40, 0],
-        opacity: [0, 0.7, 0],
-        scale: [0, 1.2, 0],
+        opacity: [0, 1, 0],
+        scale: [0, 1.5, 0],
       }}
       transition={{
         duration: 4 + Math.random() * 2,
@@ -84,7 +87,7 @@ function FloatingParticle({ delay, x, y }: { delay: number; x: number; y: number
   );
 }
 
-/* ── Stats Data ──────────────────────────────────────────── */
+/* ── Stats Section ───────────────────────────────────────── */
 const STATS = [
   { value: 200, suffix: '+', label: 'Active Members' },
   { value: 48, suffix: '', label: 'Projects Shipped' },
@@ -92,17 +95,17 @@ const STATS = [
   { value: 3, suffix: 'x', label: 'Hackathon Wins' },
 ];
 
-/* ── Main Component ──────────────────────────────────────── */
+/* ── Main Page ───────────────────────────────────────────── */
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 4000);
+
     return () => clearTimeout(timer);
   }, []);
-
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -122,100 +125,54 @@ export default function HomePage() {
     y: Math.random() * 100,
     delay: i * 0.3,
   }));
-
   if (loading) {
     return <LoadingScreen />;
   }
 
-  const pillarAccents = [
-    { color: 'var(--accent-primary)', glow: 'var(--accent-glow)' },
-    { color: 'var(--accent-secondary)', glow: 'rgba(180,79,255,0.15)' },
-    { color: 'var(--accent-tertiary)', glow: 'rgba(255,45,155,0.12)' },
-  ];
-
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-primary)' }}>
-
-      {/* ── DESIGN TOKENS ENGINE FIXED FOR SYSTEM VISUAL SYMMETRY ── */}
-      <style jsx global>{`
-        /* Architectural grid lines overlay mapping matching Events exactly */
-        .unified-homepage-context {
-          background-size: 40px 40px;
-          background-image: 
-            linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
-            linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
-          background-color: var(--bg-primary);
-        }
-
-        @keyframes border-beam {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .animate-border-beam-line {
-          background-size: 200% 100%;
-          animation: border-beam 2s linear infinite;
-        }
-
-        /* Dynamically respects dark/light tokens directly from Events configuration variables */
-        .unified-homepage-context .glass-strong {
-          background: var(--bg-surface) !important;
-          backdrop-filter: blur(20px) saturate(140%) !important;
-          -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
-          border: 1px solid var(--border-subtle) !important;
-          transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* Standardizes structural layout tracking across deep nested child subcomponents */
-        .unified-homepage-context .glass-card-surface,
-        .unified-homepage-context div[class*="bg-zinc-900/40"],
-        .unified-homepage-context div[class*="bg-white/40"] {
-          background: var(--bg-surface) !important;
-          border-color: var(--border-subtle) !important;
-          backdrop-filter: blur(20px) !important;
-          -webkit-backdrop-filter: blur(20px) !important;
-        }
-
-        .unified-homepage-context .badge {
-          background: transparent !important;
-          border: 1px solid var(--border-subtle) !important;
-          color: var(--text-primary) !important;
-          font-family: var(--font-mono), monospace;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          padding: 0.375rem 0.75rem;
-          border-radius: 0.375rem;
-          font-size: 0.75rem;
-          display: inline-flex;
-          align-items: center;
-        }
-      `}</style>
-
+    <>
       <AmbientBackground />
       <ParticlesBackground />
-
-      <div className="relative z-10 w-full overflow-hidden unified-homepage-context">
-
-        {/* ── HERO SECTION ──────────────────────────── */}
+      <div className="relative">
+        {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
           ref={heroRef}
-          className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden px-6"
+          className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
         >
+          {/* Background orbs */}
           <div
-            className="hero-blur-orb w-[500px] h-[500px] absolute pointer-events-none"
+            className="hero-blur-orb w-[600px] h-[600px]"
+            style={{
+              background: 'var(--accent-primary)',
+              top: '10%',
+              left: '-10%',
+            }}
+          />
+          <div
+            className="hero-blur-orb w-[500px] h-[500px]"
             style={{
               background: 'var(--accent-secondary)',
-              top: '-20%',
-              right: '-10%',
-              opacity: 0.12,
+              bottom: '5%',
+              right: '-8%',
+              animationDelay: '2s',
+            }}
+          />
+          <div
+            className="hero-blur-orb w-[300px] h-[300px]"
+            style={{
+              background: 'var(--accent-tertiary)',
+              top: '40%',
+              right: '20%',
+              animationDelay: '4s',
             }}
           />
 
+          {/* Floating particles */}
           {particles.map((p) => (
             <FloatingParticle key={p.id} delay={p.delay} x={p.x} y={p.y} />
           ))}
 
+          {/* Hero content */}
           <motion.div
             style={{
               y: springHeroY,
@@ -223,52 +180,84 @@ export default function HomePage() {
               scale: heroScale,
               filter: heroBlur.get() > 0 ? `blur(${heroBlur.get()}px)` : undefined,
             }}
-            className="relative z-10 text-center max-w-6xl mx-auto transform-gpu"
+            className="relative z-10 text-center px-6 max-w-6xl mx-auto transform-gpu"
           >
-            <div className="badge mb-6 gap-2 !rounded-full">
-              <span
-                className="w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{ background: 'var(--accent-primary)' }}
-              />
-              VIT Bhopal · Est. 2020
-            </div>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex justify-center mb-8"
+            >
+              <div className="badge">
+                <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                VIT Bhopal · Est. 2020
+              </div>
+            </motion.div>
 
-            <h1 className="text-[clamp(2.5rem,7vw,6rem)] font-bold leading-[0.95] mb-5 tracking-tight" style={{ color: 'var(--text-primary)' }}>
-              We Build
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[clamp(3rem,8vw,7rem)] font-bold leading-[0.95] tracking-tight mb-6"
+            >
+              <span style={{ color: 'var(--text-primary)' }}>We Build</span>
               <br />
               <span className="neon-text">Bit by Bit.</span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-base md:text-lg max-w-xl mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            {/* Subheadline */}
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              style={{ color: 'var(--text-muted)' }}
+              className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-space"
+            >
               The elite technical incubator at VIT Bhopal. Where production-grade
               engineers, AI sovereigns, and open-source architects are forged.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-4 justify-center">
-              <MagneticButton href="/events">
-                <button
-                  className="px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:opacity-90"
-                  style={{
-                    fontFamily: 'var(--font-syne)',
-                    background: 'var(--accent-primary)',
-                    color: 'var(--bg-primary)',
-                  }}
-                >
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-wrap gap-4 justify-center"
+            >
+              <MagneticButton>
+                <button className="btn-magnetic btn-primary flex items-center gap-2">
                   Explore Our Work
+                  <ArrowRight size={16} />
                 </button>
               </MagneticButton>
               <MagneticButton href="/events">
-                <button
-                  className="px-6 py-3 rounded-full text-sm font-semibold glass-strong transition-all duration-300"
-                  style={{
-                    fontFamily: 'var(--font-syne)',
-                    color: 'var(--text-primary)',
-                  }}
-                >
+                <button className="btn-magnetic btn-ghost flex items-center gap-2">
                   View Events
                 </button>
               </MagneticButton>
-            </div>
+            </motion.div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              className="absolute bottom-12 left-1/2 -translate-x-1/2"
+            >
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-6 h-10 rounded-full border-2 flex items-start justify-center pt-2 mx-auto"
+                style={{ borderColor: 'var(--border-strong)' }}
+              >
+                <div
+                  className="w-1 h-2 rounded-full"
+                  style={{ background: 'var(--accent-primary)' }}
+                />
+              </motion.div>
+            </motion.div>
           </motion.div>
         </section>
 
@@ -280,8 +269,14 @@ export default function HomePage() {
           transition={{ duration: 1 }}
           viewport={{ once: true }}
         >
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="divider mb-16" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-8"
+            >
               {STATS.map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -289,78 +284,48 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="glass-strong rounded-2xl p-6 transform-gpu border flex flex-col justify-center text-center min-h-[140px] relative group overflow-hidden"
-                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  className="text-center"
                 >
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                    style={{ boxShadow: `inset 0 0 0 1px var(--accent-primary)40` }}
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    className="stat-number"
                   />
-                  <div
-                    className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
-                    style={{ background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)` }}
-                  />
-                  <div className="relative z-10">
-                    <AnimatedCounter
-                      value={stat.value}
-                      suffix={stat.suffix}
-                      className="stat-number text-3xl md:text-4xl font-bold font-mono tracking-tight"
-                    />
-                    <p
-                      className="text-xs uppercase tracking-widest mt-2 font-mono font-semibold"
-                      style={{ color: 'var(--text-muted)' }}
-                    >
-                      {stat.label}
-                    </p>
-                  </div>
+                  <p
+                    className="text-sm mt-2 font-medium"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {stat.label}
+                  </p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
+            <div className="divider mt-16" />
           </div>
         </motion.section>
 
-        {/* ── BENTO GRID SECTION ────────────────────── */}
-        <section className="relative z-10 px-6 py-20">
+        {/* ── BENTO / ABOUT SECTION ─────────────────── */}
+        <section className="relative z-10 section-pad px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12"
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-16"
             >
               <div className="badge mb-4">About Us</div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                Not just a club. <span className="neon-text">A movement.</span>
+              <h2 className="text-[clamp(2rem,5vw,4rem)] font-bold leading-tight max-w-lg">
+                Not just a club.
+                <span className="accent-text"> A movement.</span>
               </h2>
             </motion.div>
-
-            {/* ── FORCE INLINE COMPONENT OVERRIDES TO MATCH CORE PILLARS ── */}
-            <div className="
-              [&_div[class*='card']]:!bg-[var(--bg-surface,rgba(255,255,255,0.45))]
-              [&_div[class*='card']]:!backdrop-blur-[16px]
-              [&_div[class*='card']]:!-webkit-backdrop-blur-[16px]
-              [&_div[class*='card']]:!border-[var(--border-subtle)]
-              [&_div[class*='card']]:!p-6
-              [&_div[class*='card']]:md:!p-8
-              [&_div[class*='card']]:!rounded-2xl
-              [&_div[class*='card']]:!opacity-100
-              [&_h3]:!text-xl
-              [&_h3]:!font-bold
-              [&_h3]:!mb-3
-              [&_h3]:!tracking-normal
-              [&_h3]:!text-[var(--text-primary)]
-              [&_p]:!text-sm
-              [&_p]:!leading-relaxed
-              [&_p]:!text-[var(--text-muted)]
-            ">
-              <BentoGrid />
-            </div>
+            <BentoGrid />
           </div>
         </section>
 
-        {/* ── CORE PILLARS SECTION ──────────────────── */}
-        <section className="relative z-10 px-6 py-20">
+        {/* ── PILLARS SECTION ───────────────────────── */}
+        <section className="relative z-10 section-pad px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -368,8 +333,8 @@ export default function HomePage() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <div className="badge mb-4 mx-auto">Our Core Pillars</div>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+              <div className="badge mb-4 mx-auto inline-flex">Our Core Pillars</div>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-bold">
                 What drives us forward
               </h2>
             </motion.div>
@@ -377,159 +342,93 @@ export default function HomePage() {
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
-                  icon: <Cpu size={20} />,
+                  icon: <Cpu size={28} />,
                   title: 'Production Engineering',
                   desc: 'We build software that ships. From system design to deployment pipelines, every line of code meets industry standards — because university projects should look like startup launches.',
-                  accent: pillarAccents[0],
                 },
                 {
-                  icon: <Zap size={20} />,
+                  icon: <Zap size={28} />,
                   title: 'AI Sovereignty',
                   desc: "We don't just use AI — we build it. Custom models, fine-tuned transformers, and sovereign inference pipelines that give us full ownership of the intelligence stack.",
-                  accent: pillarAccents[1],
                 },
                 {
-                  icon: <Globe size={20} />,
+                  icon: <Globe size={28} />,
                   title: 'Open Source Impact',
                   desc: 'Our code powers real products used by thousands globally. We contribute to the commons, maintain high-quality repos, and build in public with zero compromise on quality.',
-                  accent: pillarAccents[2],
                 },
               ].map((pillar, i) => (
                 <motion.div
                   key={pillar.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="rounded-2xl p-6 md:p-8 glass-strong transition-all group relative overflow-hidden transform-gpu"
-                  whileHover={{ y: -4, transition: { duration: 0.25 } }}
+                  transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="glass-strong rounded-2xl p-8 card-hover border-beam-wrap"
                 >
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                    style={{ boxShadow: `inset 0 0 0 1px ${pillar.accent.color}40` }}
-                  />
-
-                  <div
-                    className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
-                    style={{ background: `linear-gradient(90deg, transparent, ${pillar.accent.color}, transparent)` }}
-                  />
-
-                  <div
-                    className="absolute -top-12 -right-12 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 blur-3xl pointer-events-none"
-                    style={{ background: pillar.accent.color }}
-                  />
-
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300 relative z-10"
+                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
                     style={{
-                      background: pillar.accent.glow,
-                      color: pillar.accent.color,
-                      border: `1px solid ${pillar.accent.color}30`,
+                      background: 'var(--accent-glow)',
+                      color: 'var(--accent-primary)',
+                      border: '1px solid var(--border-accent)',
                     }}
                   >
                     {pillar.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-3 leading-tight relative z-10" style={{ color: 'var(--text-primary)' }}>
-                    {pillar.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed mb-5 relative z-10" style={{ color: 'var(--text-muted)' }}>
+                  <h3 className="text-xl font-bold mb-3">{pillar.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
                     {pillar.desc}
                   </p>
-                  <button
-                    className="flex items-center gap-2 text-sm font-semibold transition-all duration-200 mt-auto relative z-10"
-                    style={{ color: pillar.accent.color, fontFamily: 'var(--font-syne)' }}
-                  >
-                    Learn More
-                    <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
+        <EventGallery />
+        <Testimonials />
 
-        {/* ── LIVE DATA STREAM GALLERIES & TESTIMONIALS ── */}
-        <section className="relative z-10">
-          <EventGallery />
-        </section>
-
-        {/* ── TESTIMONIALS SECTION ── */}
-        <section className="relative z-10 px-6 py-20">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <div
-                className="mb-4 mx-auto px-4 py-1.5 rounded-full text-xs font-mono font-semibold tracking-widest uppercase border inline-flex items-center"
-                style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
-              >
-                Community Reviews
-              </div>
-              <h2 className="text-3xl md:text-4xl font-syne font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                What our members say
-              </h2>
-            </motion.div>
-
-            <Testimonials />
-          </div>
-        </section>
-
-        {/* ── CALL TO ACTION SECTION ────────────────── */}
-        <section className="relative z-10 px-6 py-20">
+        {/* ── JOIN CTA ──────────────────────────────── */}
+        <section className="relative z-10 section-pad px-6">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="rounded-2xl p-8 md:p-12 glass-strong relative overflow-hidden shadow-sm"
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-strong rounded-3xl p-12 md:p-20 border-beam-wrap relative overflow-hidden"
             >
               <div
-                className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"
-                style={{ boxShadow: `inset 0 0 0 1px var(--accent-primary)40` }}
+                className="hero-blur-orb w-80 h-80"
+                style={{
+                  background: 'var(--accent-primary)',
+                  top: '-40%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  opacity: 0.08,
+                }}
               />
-              <div
-                className="absolute top-0 left-0 right-0 h-px opacity-0 hover:opacity-100 transition-opacity duration-500 animate-border-beam-line"
-                style={{ background: `linear-gradient(90deg, transparent, var(--accent-primary), transparent)` }}
-              />
-
-              <div className="badge mb-6 inline-flex items-center mx-auto gap-1.5">
-                <Star size={12} style={{ color: 'var(--accent-primary)' }} /> Open Recruitment
+              <div className="badge mb-6 mx-auto inline-flex">
+                <Star size={10} />
+                Open Recruitment
               </div>
-
-              <h2 className="text-2xl md:text-4xl font-bold mb-4 tracking-tight" style={{ color: 'var(--text-primary)' }}>
-                Ready to build <span className="neon-text">something legendary?</span>
+              <h2 className="text-[clamp(2rem,5vw,4rem)] font-bold mb-5 leading-tight">
+                Ready to build
+                <br />
+                <span className="neon-text">something legendary?</span>
               </h2>
-
-              <p className="text-sm max-w-md mx-auto mb-8 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              <p className="text-base mb-8 max-w-md mx-auto" style={{ color: 'var(--text-muted)' }}>
                 Join the 1% of VIT Bhopal who ship real projects, win national hackathons,
                 and leave a permanent mark on the open-source world.
               </p>
-
               <div className="flex gap-4 justify-center flex-wrap">
                 <MagneticButton href="/team">
-                  <button
-                    className="px-5 py-2.5 rounded-full text-xs font-semibold hover:opacity-90"
-                    style={{
-                      fontFamily: 'var(--font-syne)',
-                      background: 'var(--accent-primary)',
-                      color: 'var(--bg-primary)',
-                    }}
-                  >
+                  <button className="btn-magnetic btn-primary">
                     Meet the Team
+                    <ArrowRight size={16} />
                   </button>
                 </MagneticButton>
                 <MagneticButton href="/events">
-                  <button
-                    className="px-5 py-2.5 rounded-full text-xs font-semibold glass-strong transition-colors"
-                    style={{
-                      fontFamily: 'var(--font-syne)',
-                      color: 'var(--text-primary)',
-                    }}
-                  >
+                  <button className="btn-magnetic btn-ghost">
                     Our Events
                   </button>
                 </MagneticButton>
@@ -538,7 +437,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── FOOTER SYSTEM ─────────────────────────── */}
+        {/* ── FOOTER ────────────────────────────────── */}
         <footer className="relative z-10 border-t px-6 py-10" style={{ borderColor: 'var(--border-subtle)' }}>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
@@ -546,11 +445,11 @@ export default function HomePage() {
               <Image
                 src="/logo.png"
                 alt="Bit By Bit Logo"
-                width={45}
-                height={45}
+                width={50}
+                height={50}
                 className="object-contain"
               />
-              <span className="font-bold text-lg" style={{ fontFamily: 'var(--font-syne)', color: 'var(--text-primary)' }}>
+              <span className="font-syne font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
                 Bit By Bit
               </span>
             </div>
@@ -564,7 +463,7 @@ export default function HomePage() {
                 <a
                   key={s}
                   href="#"
-                  className="text-xs font-semibold transition-colors hover:text-current"
+                  className="text-xs font-medium transition-colors hover:text-current"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {s}
@@ -575,6 +474,6 @@ export default function HomePage() {
         </footer>
 
       </div>
-    </div>
+    </>
   );
 }
