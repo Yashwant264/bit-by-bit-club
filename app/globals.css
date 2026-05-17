@@ -72,7 +72,7 @@
   --border-accent: rgba(59, 130, 246, 0.35);
 
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
-  --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 255, 138, 0.1);
+  --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(59, 130, 246, 0.1);
   --shadow-accent: 0 0 60px rgba(59, 130, 246, 0.15), 0 0 120px rgba(180, 79, 255, 0.08);
 
   --mesh-color-1: rgba(59, 130, 246, 0.04);
