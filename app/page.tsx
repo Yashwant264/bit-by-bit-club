@@ -11,9 +11,6 @@ import Link from 'next/link';
 import AmbientBackground from '@/components/AmbientBackground';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import Image from 'next/image';
-import EventGallery from '@/components/EventGallery';
-import Testimonials from '@/components/Testimonials';
-
 
 
 /* ── Magnetic Button ─────────────────────────────────────── */
@@ -384,8 +381,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <EventGallery />
-        <Testimonials />
 
         {/* ── JOIN CTA ──────────────────────────────── */}
         <section className="relative z-10 section-pad px-6">
