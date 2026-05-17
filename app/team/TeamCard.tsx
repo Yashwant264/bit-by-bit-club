@@ -38,7 +38,7 @@ export const ACCENTS = [
     color: 'var(--accent-primary)',
     glow: 'var(--accent-glow)',
     shadow: 'rgba(59,130,246,0.18)',
-    rgb: '0,255,138',
+    rgb: '59,130,246',
   },
   {
     color: 'var(--accent-secondary)',

@@ -37,7 +37,14 @@ export default function LoadingScreen() {
               alt="Bit By Bit Logo"
               width={140}
               height={140}
-              className="relative z-10 object-contain drop-shadow-[0_0_30px_rgba(0,255,150,0.8)] animate-pulse mix-blend-lighten"
+              className="relative z-10 object-contain animate-pulse"
+              style={{
+                filter: `
+    drop-shadow(0 0 12px rgba(59,130,246,0.9))
+    drop-shadow(0 0 28px rgba(59,130,246,0.65))
+    drop-shadow(0 0 60px rgba(59,130,246,0.35))
+  `,
+              }}
             />
           </div>
 
