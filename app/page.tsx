@@ -132,7 +132,13 @@ export default function HomePage() {
     <>
       <AmbientBackground />
       <ParticlesBackground />
-      <div className="relative">
+      <div
+        className="relative"
+        style={{
+          backgroundColor: 'var(--bg-primary)',
+          color: 'var(--text-primary)',
+        }}
+      >
         {/* ── PARALLAX HERO ─────────────────────────── */}
         <section
           ref={heroRef}
