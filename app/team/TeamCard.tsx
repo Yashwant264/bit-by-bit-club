@@ -14,43 +14,43 @@ import { Github, Twitter, Linkedin, Instagram, Globe, Quote } from 'lucide-react
 export type AccentIndex = 0 | 1 | 2;
 
 export interface Socials {
-  github?:    string;
-  twitter?:   string;
-  linkedin?:  string;
+  github?: string;
+  twitter?: string;
+  linkedin?: string;
   instagram?: string;
-  website?:   string;
+  website?: string;
 }
 
 export interface Member {
-  id:          number;
-  name:        string;
-  role:        string;
-  year:        string;
-  photo:       string;   // e.g. "/team/aryan-mehta.jpg"
-  socials:     Socials;
+  id: number;
+  name: string;
+  role: string;
+  year: string;
+  photo: string;   // e.g. "/team/aryan-mehta.jpg"
+  socials: Socials;
   accentIndex: AccentIndex;
-  message?:    string;   // only for leadership
+  message?: string;   // only for leadership
 }
 
 /* ── Accent palette ─────────────────────────────────────── */
 export const ACCENTS = [
   {
-    color:  'var(--accent-primary)',
-    glow:   'var(--accent-glow)',
-    shadow: 'rgba(0,255,138,0.18)',
-    rgb:    '0,255,138',
+    color: 'var(--accent-primary)',
+    glow: 'var(--accent-glow)',
+    shadow: 'rgba(59,130,246,0.18)',
+    rgb: '0,255,138',
   },
   {
-    color:  'var(--accent-secondary)',
-    glow:   'rgba(180,79,255,0.14)',
+    color: 'var(--accent-secondary)',
+    glow: 'rgba(180,79,255,0.14)',
     shadow: 'rgba(180,79,255,0.18)',
-    rgb:    '180,79,255',
+    rgb: '180,79,255',
   },
   {
-    color:  'var(--accent-tertiary)',
-    glow:   'rgba(255,45,155,0.10)',
+    color: 'var(--accent-tertiary)',
+    glow: 'rgba(255,45,155,0.10)',
     shadow: 'rgba(255,45,155,0.16)',
-    rgb:    '255,45,155',
+    rgb: '255,45,155',
   },
 ] as const;
 
@@ -71,21 +71,21 @@ function SocialLink({
       rel="noopener noreferrer"
       className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200"
       style={{
-        color:      'var(--text-muted)',
+        color: 'var(--text-muted)',
         background: 'transparent',
-        border:     '1px solid var(--border-subtle)',
+        border: '1px solid var(--border-subtle)',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget;
-        el.style.color       = accentColor;
+        el.style.color = accentColor;
         el.style.borderColor = accentColor + '60';
-        el.style.background  = accentColor + '12';
+        el.style.background = accentColor + '12';
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget;
-        el.style.color       = 'var(--text-muted)';
+        el.style.color = 'var(--text-muted)';
         el.style.borderColor = 'var(--border-subtle)';
-        el.style.background  = 'transparent';
+        el.style.background = 'transparent';
       }}
     >
       {icon}
@@ -96,11 +96,11 @@ function SocialLink({
 function Socials({ socials, accentColor }: { socials: Socials; accentColor: string }) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      {socials.github    && <SocialLink href={socials.github}    icon={<Github    size={13} />} accentColor={accentColor} />}
-      {socials.twitter   && <SocialLink href={socials.twitter}   icon={<Twitter   size={13} />} accentColor={accentColor} />}
-      {socials.linkedin  && <SocialLink href={socials.linkedin}  icon={<Linkedin  size={13} />} accentColor={accentColor} />}
+      {socials.github && <SocialLink href={socials.github} icon={<Github size={13} />} accentColor={accentColor} />}
+      {socials.twitter && <SocialLink href={socials.twitter} icon={<Twitter size={13} />} accentColor={accentColor} />}
+      {socials.linkedin && <SocialLink href={socials.linkedin} icon={<Linkedin size={13} />} accentColor={accentColor} />}
       {socials.instagram && <SocialLink href={socials.instagram} icon={<Instagram size={13} />} accentColor={accentColor} />}
-      {socials.website   && <SocialLink href={socials.website}   icon={<Globe     size={13} />} accentColor={accentColor} />}
+      {socials.website && <SocialLink href={socials.website} icon={<Globe size={13} />} accentColor={accentColor} />}
     </div>
   );
 }
@@ -113,11 +113,11 @@ function Avatar({
   accentColor,
   glowColor,
 }: {
-  photo:       string;
-  name:        string;
-  size:        'sm' | 'lg';
+  photo: string;
+  name: string;
+  size: 'sm' | 'lg';
   accentColor: string;
-  glowColor:   string;
+  glowColor: string;
 }) {
   const [imgError, setImgError] = useState(false);
   const initials = name
@@ -128,15 +128,15 @@ function Avatar({
     .slice(0, 2);
 
   const dim = size === 'lg' ? 'w-24 h-24' : 'w-14 h-14';
-  const txt = size === 'lg' ? 'text-2xl'  : 'text-base';
+  const txt = size === 'lg' ? 'text-2xl' : 'text-base';
 
   return (
     <div
       className={`${dim} rounded-2xl overflow-hidden shrink-0 relative`}
       style={{
-        border:     `1px solid ${accentColor}30`,
+        border: `1px solid ${accentColor}30`,
         background: glowColor,
-        boxShadow:  `0 0 0 1px ${accentColor}15`,
+        boxShadow: `0 0 0 1px ${accentColor}15`,
       }}
     >
       {!imgError ? (
@@ -168,23 +168,23 @@ export function LeadershipCard({
   index,
 }: {
   member: Member;
-  index:  number;
+  index: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]),  { stiffness: 180, damping: 22 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]),  { stiffness: 180, damping: 22 });
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 180, damping: 22 });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 180, damping: 22 });
 
   const accent = ACCENTS[member.accentIndex];
 
   function onMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!cardRef.current) return;
     const r = cardRef.current.getBoundingClientRect();
-    mouseX.set((e.clientX - r.left) / r.width  - 0.5);
-    mouseY.set((e.clientY - r.top)  / r.height - 0.5);
+    mouseX.set((e.clientX - r.left) / r.width - 0.5);
+    mouseY.set((e.clientY - r.top) / r.height - 0.5);
   }
   function onLeave() { mouseX.set(0); mouseY.set(0); setIsHovered(false); }
 
@@ -224,9 +224,9 @@ export function LeadershipCard({
         <div
           className="absolute top-5 right-5 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-widest"
           style={{
-            background:   `${accent.color}15`,
-            color:        accent.color,
-            border:       `1px solid ${accent.color}30`,
+            background: `${accent.color}15`,
+            color: accent.color,
+            border: `1px solid ${accent.color}30`,
           }}
         >
           {member.role}
@@ -291,7 +291,7 @@ export function MemberCard({
   index,
 }: {
   member: Member;
-  index:  number;
+  index: number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -306,8 +306,8 @@ export function MemberCard({
   function onMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!cardRef.current) return;
     const r = cardRef.current.getBoundingClientRect();
-    mouseX.set((e.clientX - r.left) / r.width  - 0.5);
-    mouseY.set((e.clientY - r.top)  / r.height - 0.5);
+    mouseX.set((e.clientX - r.left) / r.width - 0.5);
+    mouseY.set((e.clientY - r.top) / r.height - 0.5);
   }
   function onLeave() { mouseX.set(0); mouseY.set(0); setIsHovered(false); }
 
