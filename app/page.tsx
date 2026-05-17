@@ -146,7 +146,7 @@ export default function HomePage() {
         >
           {/* Background orbs */}
           <div
-            className="hero-blur-orb w-[600px] h-[600px]"
+            className="hero-blur-orb w-[220px] h-[220px] md:w-[600px] md:h-[600px]"
             style={{
               background: 'var(--accent-primary)',
               top: '10%',
@@ -154,7 +154,7 @@ export default function HomePage() {
             }}
           />
           <div
-            className="hero-blur-orb w-[500px] h-[500px]"
+            className="hero-blur-orb w-[180px] h-[180px] md:w-[500px] md:h-[500px]"
             style={{
               background: 'var(--accent-secondary)',
               bottom: '5%',
@@ -163,7 +163,7 @@ export default function HomePage() {
             }}
           />
           <div
-            className="hero-blur-orb w-[300px] h-[300px]"
+            className="hero-blur-orb w-[120px] h-[120px] md:w-[300px] md:h-[300px]"
             style={{
               background: 'var(--accent-tertiary)',
               top: '40%',
@@ -173,9 +173,11 @@ export default function HomePage() {
           />
 
           {/* Floating particles */}
-          {particles.map((p) => (
-            <FloatingParticle key={p.id} delay={p.delay} x={p.x} y={p.y} />
-          ))}
+          <div className="hidden md:block">
+            {particles.map((p) => (
+              <FloatingParticle key={p.id} delay={p.delay} x={p.x} y={p.y} />
+            ))}
+          </div>
 
           {/* Hero content */}
           <motion.div

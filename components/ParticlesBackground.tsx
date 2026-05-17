@@ -4,7 +4,7 @@ import Particles from "react-tsparticles";
 
 export default function ParticlesBackground() {
     return (
-        <div className="hidden md:block absolute inset-0 -z-10">
+        <div className="hidden lg:block absolute inset-0 -z-10">
             <Particles
                 options={{
                     background: {

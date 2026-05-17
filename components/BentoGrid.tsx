@@ -128,8 +128,12 @@ function BentoCell({ cell }: { cell: BentoCell }) {
   return (
     <motion.div
       variants={cellVariants}
-      className={`${colClass} ${rowClass} group relative rounded-2xl bg-zinc-900/80 border border-white/5 md:bg-transparent md:border-none md:glass-strong overflow-hidden transform-gpu`}
-      style={{ border: '1px solid var(--border-subtle)' }}
+      className={`${colClass} ${rowClass} group relative rounded-2xl overflow-hidden transform-gpu md:bg-transparent md:border-none md:glass-strong`}
+      style={{
+        background: 'var(--bg-card)',
+        border: '1px solid var(--border-subtle)',
+      }}
+
       whileHover={{
         y: -3,
         boxShadow: `0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px ${accent.color}30`,

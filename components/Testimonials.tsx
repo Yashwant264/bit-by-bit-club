@@ -73,7 +73,12 @@ export default function Testimonials() {
                             </p>
 
                             <div>
-                                <h3 className="text-2xl font-semibold text-black dark:text-white">{item.name}</h3>
+                                <h3
+                                    className="text-2xl font-semibold"
+                                    style={{ color: 'var(--text-primary)' }}
+                                >
+                                    {item.name}
+                                </h3>
                                 <p
                                     className="text-sm"
                                     style={{ color: 'var(--accent-primary)' }}
